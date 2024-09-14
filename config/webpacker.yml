@@ -1,10 +1,7 @@
 development:
   <<: *default
   compile: true
-
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  # are up to date. `bun install` will do this check automatically, but you can also run
-  # `bin/webpacker --check-bun` or `bun check` manually.
+  mode: development
   check_bun_integrity: true
 
   # Reference: https://webpack.js.org/configuration/dev-server/
