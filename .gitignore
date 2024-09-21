@@ -17,6 +17,8 @@
 !/log/.keep
 !/tmp/.keep
 
+/public/dist/*
+
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/
@@ -33,3 +35,4 @@
 node_modules
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+.env.development
