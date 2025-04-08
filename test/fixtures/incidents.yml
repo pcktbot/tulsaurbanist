@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date_time: 2025-04-08 17:47:48
+  location_description: MyText
+  latitude: 1.5
+  longitude: 1.5
+  fatality_count: 1
+  pedestrian_count: 1
+  cyclist_count: 1
+  motorcyclist_count: 1
+  vehicle_occupant_count: 1
+  other_count: 1
+  brief_description: MyText
+  information_source: MyString
+  source_url: MyString
+  verification_status: 1
+  source: one
+
+two:
+  date_time: 2025-04-08 17:47:48
+  location_description: MyText
+  latitude: 1.5
+  longitude: 1.5
+  fatality_count: 1
+  pedestrian_count: 1
+  cyclist_count: 1
+  motorcyclist_count: 1
+  vehicle_occupant_count: 1
+  other_count: 1
+  brief_description: MyText
+  information_source: MyString
+  source_url: MyString
+  verification_status: 1
+  source: two
