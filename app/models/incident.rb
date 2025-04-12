@@ -12,10 +12,10 @@ class Incident < ApplicationRecord
   validates :information_source, presence: true
   
   enum verification_status: {
-    unverified: 0,
-    partially_verified: 1,
-    verified: 2
-  }, _default: :unverified
+    status_unverified: 0,
+    status_partially_verified: 1,
+    status_verified: 2
+  }, _default: :status_unverified
   
   geocoded_by :location_description
   after_validation :geocode, if: ->(obj) { obj.location_description.present? && (obj.latitude.blank? || obj.longitude.blank?) }
@@ -32,6 +32,22 @@ class Incident < ApplicationRecord
   
   def has_geo_coordinates?
     latitude.present? && longitude.present?
+  end
+
+  def unverified?
+    status_unverified?
+  end
+  
+  def partially_verified?
+    status_partially_verified?
+  end
+  
+  def verified?
+    status_verified?
+  end
+  
+  def verification_status_display
+    verification_status.to_s.sub('status_', '').humanize
   end
 
 end

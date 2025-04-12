@@ -1,0 +1,35 @@
+<h1>Incidents</h1>
+
+<div class="notice"><%= notice %></div>
+
+<div class="actions">
+  <%= link_to 'New Incident', new_incident_path, class: 'button' %>
+</div>
+
+<table class="incidents-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Fatalities</th>
+      <th>Verification</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @incidents.each do |incident| %>
+      <tr>
+        <td><%= incident.date_time.strftime("%B %d, %Y") %></td>
+        <td><%= incident.location_description %></td>
+        <td><%= incident.fatality_count %></td>
+        <td><%= incident.verification_status_display %></td>        
+        <td class="actions">
+          <%= link_to 'Show', incident %>
+          <%= link_to 'Edit', edit_incident_path(incident) %>
+          <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table><h1>Incidents#index</h1>
+<p>Find me in app/views/incidents/index.html.erb</p>

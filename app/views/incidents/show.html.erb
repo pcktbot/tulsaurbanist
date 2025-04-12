@@ -1,0 +1,51 @@
+<h1>Incidents#show</h1>
+<p>Find me in app/views/incidents/show.html.erb</p>
+<div class="incident-details">
+  <h1>Incident Details</h1>
+
+  <div class="notice"><%= notice %></div>
+
+  <dl>
+    <dt>Date and Time:</dt>
+    <dd><%= @incident.date_time.strftime("%B %d, %Y at %I:%M %p") %></dd>
+
+    <dt>Location:</dt>
+    <dd><%= @incident.location_description %></dd>
+
+    <dt>Total Fatalities:</dt>
+    <dd><%= @incident.fatality_count %></dd>
+
+    <% if @incident.total_fatalities_by_type.any? { |_, count| count > 0 } %>
+      <dt>Fatalities by Type:</dt>
+      <dd>
+        <ul>
+          <% @incident.total_fatalities_by_type.each do |type, count| %>
+            <% if count > 0 %>
+              <li><%= type.to_s.humanize %>: <%= count %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </dd>
+    <% end %>
+
+    <dt>Information Source:</dt>
+    <dd><%= @incident.information_source %></dd>
+
+    <dt>Source:</dt>
+    <dd><%= @incident.source&.name || 'None' %></dd>
+
+    <dt>Verification Status:</dt>
+<dd><%= @incident.verification_status_display %></dd>
+
+    <% if @incident.has_geo_coordinates? %>
+      <dt>Coordinates:</dt>
+      <dd>Latitude: <%= @incident.latitude %>, Longitude: <%= @incident.longitude %></dd>
+    <% end %>
+  </dl>
+
+  <div class="links">
+    <%= link_to 'Edit', edit_incident_path(@incident) %> |
+    <%= link_to 'Back to Incidents', incidents_path %> |
+    <%= link_to 'Delete', incident_path(@incident), method: :delete, data: { confirm: 'Are you sure you want to delete this incident?' } %>
+  </div>
+</div>

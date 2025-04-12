@@ -1,0 +1,87 @@
+<%= form_with(model: incident, local: true) do |form| %>
+  <% if @incident.errors.any? %>
+    <div class="error-messages">
+      <h2><%= pluralize(@incident.errors.count, "error") %> prohibited this incident from being saved:</h2>
+      <ul>
+        <% @incident.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :date_time %>
+    <%= form.datetime_local_field :date_time, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location_description %>
+    <%= form.text_field :location_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fatality_count %>
+    <%= form.number_field :fatality_count, min: 0, required: true %>
+  </div>
+
+  <fieldset>
+    <legend>Fatality Details by Type</legend>
+    
+    <div class="field">
+      <%= form.label :pedestrian_count %>
+      <%= form.number_field :pedestrian_count, min: 0 %>
+    </div>
+
+    <div class="field">
+      <%= form.label :cyclist_count %>
+      <%= form.number_field :cyclist_count, min: 0 %>
+    </div>
+
+    <div class="field">
+      <%= form.label :motorcyclist_count %>
+      <%= form.number_field :motorcyclist_count, min: 0 %>
+    </div>
+
+    <div class="field">
+      <%= form.label :vehicle_occupant_count %>
+      <%= form.number_field :vehicle_occupant_count, min: 0 %>
+    </div>
+
+    <div class="field">
+      <%= form.label :other_count %>
+      <%= form.number_field :other_count, min: 0 %>
+    </div>
+  </fieldset>
+
+  <div class="field">
+    <%= form.label :information_source %>
+    <%= form.text_field :information_source, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :verification_status %>
+    <%= form.select :verification_status, Incident.verification_statuses.keys.map { |status| [status.to_s.sub('status_', '').humanize, status] } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :source_id, "Source" %>
+    <%= form.collection_select :source_id, Source.all, :id, :name, { include_blank: true } %>
+  </div>
+
+  <div class="coordinates">
+    <div class="field">
+      <%= form.label :latitude %>
+      <%= form.text_field :latitude %>
+    </div>
+
+    <div class="field">
+      <%= form.label :longitude %>
+      <%= form.text_field :longitude %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

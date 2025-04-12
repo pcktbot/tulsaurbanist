@@ -15,6 +15,7 @@
     "@types/turbolinks": "^5.2.2",
     "esbuild-loader": "^4.2.2",
     "esbuild-register": "^3.6.0",
+    "ts-node": "^10.9.2",
     "webpack-dev-server": "^3"
   }
 }
