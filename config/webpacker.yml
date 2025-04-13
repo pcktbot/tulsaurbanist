@@ -6,7 +6,6 @@ default: &default
   cache_path: tmp/cache/webpacker
   webpack_compile_output: true
 
-  # Add typescript to the list of extensions
   extensions:
     - .ts
     - .tsx

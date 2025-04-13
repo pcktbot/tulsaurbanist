@@ -1,5 +1,6 @@
 const path = require('path');
 const { EsbuildPlugin } = require('esbuild-loader');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 /** @type {import('webpack').Configuration} */
 const config = {
@@ -8,8 +9,8 @@ const config = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'app/assets/builds'),
-    publicPath: '/assets/',
+    path: path.resolve(__dirname, 'public/packs'),
+    publicPath: '/packs/',
   },
   resolve: {
     extensions: ['.ts', '.js'],
@@ -39,12 +40,18 @@ const config = {
       }
     ]
   },
-  plugins: [new EsbuildPlugin()],
+  plugins: [
+    new EsbuildPlugin(),
+    new WebpackManifestPlugin({
+      publicPath: '/packs/',
+      writeToFileEmit: true      
+    })
+  ],
   mode: 'development',
   devServer: {
     static: {
       directory: path.resolve(__dirname, 'public'),
-      publicPath: '/assets/'
+      publicPath: '/packs/'
     },
     compress: true,
     port: 3035,
