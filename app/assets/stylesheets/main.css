@@ -1,0 +1,60 @@
+:root {
+  --primary-color: red;
+}
+* {
+  font-family: 'Futura', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.hidden {
+  display: none;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table, th, td, tr {
+  border: 1px solid var(--primary-color);
+}
+
+tr .left { 
+  text-align: left;
+}
+tr .right { 
+  text-align: right;
+}
+tr .center { 
+  text-align: center;
+}
+tr .justify { 
+  text-align: justify;
+}
+
+.actions {
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.button {
+  padding: 0em 2em;
+  background-color: white;
+  border: 1px solid var(--primary-color);
+  text-align: center;
+  transition: all 150ms ease-in-out;
+}
+
+.button:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: white;
+}
+.control {
+  flex-grow: 1;
+}

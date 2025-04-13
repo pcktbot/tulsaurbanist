@@ -1,19 +1,19 @@
 <h1>Incidents</h1>
 
-<div class="notice"><%= notice %></div>
+<div class="notice hidden"><%= notice %></div>
 
 <div class="actions">
   <%= link_to 'New Incident', new_incident_path, class: 'button' %>
 </div>
 
-<table class="incidents-table">
+<table class="table">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Location</th>
-      <th>Fatalities</th>
-      <th>Verification</th>
-      <th>Actions</th>
+      <th class="left">Date</th>
+      <th class="left">Location</th>
+      <th class="right">Fatalities</th>
+      <th class="left">Verification</th>
+      <th class="center">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -24,12 +24,11 @@
         <td><%= incident.fatality_count %></td>
         <td><%= incident.verification_status_display %></td>        
         <td class="actions">
-          <%= link_to 'Show', incident %>
-          <%= link_to 'Edit', edit_incident_path(incident) %>
-          <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Show', incident, class: 'button control' %>
+          <%= link_to 'Edit', edit_incident_path(incident), class: 'button control' %>
+          <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button control destructive' %>
         </td>
       </tr>
     <% end %>
   </tbody>
-</table><h1>Incidents#index</h1>
-<p>Find me in app/views/incidents/index.html.erb</p>
+</table>
