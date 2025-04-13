@@ -1,0 +1,9 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": ".npmrc, .nvmrc, package-lock.json, yarn.lock, .yarnrc, .eslintrc*, .prettierrc*, .babelrc*, tsconfig.json, vite.config.*, jest.config.*, webpack.config.*, rollup.config.*, next.config.*, babel.config.*, postcss.config.*, bun.lockb",
+    ".gitignore": ".gitattributes, .gitmodules, .gitmessage, .gitkeep, .mailmap",
+    "Gemfile": "Gemfile.lock, .ruby-version, .rubocop.yml, .rspec, .ruby-gemset, config.ru, Rakefile, Procfile"
+  }
+}
