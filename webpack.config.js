@@ -19,17 +19,33 @@ const config = {
     ]
   },
   module: {
-    rules: [{
-      test: /\.ts$/,
-      loader: 'esbuild-loader',
-      options: {loader: 'ts', target: 'es2015'}
-    }]
+    rules: [
+      {
+        test: /\.js$/,
+        include: /node_modules\/@hotwired/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env']
+        }
+      },
+      {
+        test: /\.(ts|js)$/,
+        loader: 'esbuild-loader',
+        options: {
+          loader: 'ts',
+          target: 'es2020',
+          tsconfigRaw: require('./tsconfig.json')
+        }
+      }
+    ]
   },
   plugins: [new EsbuildPlugin()],
   mode: 'development',
   devServer: {
-    contentBase: path.resolve(__dirname, 'public'),
-    publicPath: '/assets/',
+    static: {
+      directory: path.resolve(__dirname, 'public'),
+      publicPath: '/assets/'
+    },
     compress: true,
     port: 3035,
     hot: true,
