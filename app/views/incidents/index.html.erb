@@ -21,7 +21,7 @@
       <tr>
         <td><%= incident.date_time.strftime("%B %d, %Y") %></td>
         <td><%= incident.location_description %></td>
-        <td><%= incident.fatality_count %></td>
+        <td class="right"><%= incident.fatality_count %></td>
         <td><%= incident.verification_status_display %></td>        
         <td class="actions">
           <%= link_to 'Show', incident, class: 'button control' %>

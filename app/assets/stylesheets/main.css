@@ -22,6 +22,9 @@ a {
   border: 1px solid var(--primary-color);
 }
 
+th, td {
+  padding: 0.25em 0.5em;
+}
 tr .left { 
   text-align: left;
 }
