@@ -22,7 +22,7 @@ a {
 }
 
 a:hover {
-  border-bottom: 4px solid var(--primary-color);
+  box-shadow: inset 0 0 0 25px white;
 }
 .header {
   margin: 1em 0 0.5em;
@@ -61,10 +61,11 @@ tr .justify {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
+  border: 1px solid white;
 }
 
-.button {
-  padding: 0em 2em;
+.button, .actions input[type=submit]  {
+  padding: 1.5em 3em;
   background-color: white;
   border: 1px solid var(--primary-color);
   text-align: center;
