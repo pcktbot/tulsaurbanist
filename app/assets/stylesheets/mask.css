@@ -1,0 +1,12 @@
+.masked-text {
+  background-image: url('/tulsa-flag.png');
+  background-size: cover;
+  background-position: top center;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 13rem;
+  line-height: 0.8;
+  font-weight: bold;
+  text-align: left;
+}

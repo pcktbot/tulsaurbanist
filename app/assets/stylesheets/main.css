@@ -1,5 +1,8 @@
 :root {
-  --primary-color: red;
+  --primary-color: #b73032;
+  --secondary-color: #152645;
+  --tertiary-color: #e2b142;
+  --quaternary-color: #f7f2e3;
   --heading-font: "Bowlby One", sans-serif;
   --body-font: "Futura", sans-serif;
 }
@@ -32,6 +35,10 @@ a:hover {
   display: none;
 }
 
+.navigation-menu {
+  padding: 0.5em 0;
+  font-size: 1.5rem;
+}
 .table {
   width: 100%;
   border-collapse: collapse;
