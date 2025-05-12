@@ -1,7 +1,9 @@
 import '@hotwired/turbo-rails';
 import '../controllers';
-const Rails = require('@rails/ujs'); // doesn't work with * import
 import * as ActiveStorage from '@rails/activestorage';
+// @ts-ignore
+import Rails from '@rails/ujs';
+
 
 Rails.start();
 ActiveStorage.start();
