@@ -58,7 +58,8 @@ class IncidentsController < ApplicationController
       :verification_status,
       :latitude,
       :longitude,
-      :source_id
+      :source_id,
+      :brief_description
     )
   end
 end

@@ -12,6 +12,11 @@
     <dt>Location:</dt>
     <dd><%= @incident.location_description %></dd>
 
+    <% if @incident.brief_description.present? %>
+      <dt>Description:</dt>
+      <dd><%= @incident.brief_description %></dd>
+    <% end %>
+
     <dt>Total Fatalities:</dt>
     <dd><%= @incident.fatality_count %></dd>
 

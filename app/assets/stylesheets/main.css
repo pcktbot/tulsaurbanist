@@ -3,6 +3,7 @@
   --secondary-color: #152645;
   --tertiary-color: #e2b142;
   --quaternary-color: #f7f2e3;
+  --quinary-color: #f7f2e3;
   --heading-font: "Bowlby One", sans-serif;
   --body-font: "Futura", sans-serif;
 }
@@ -24,9 +25,11 @@ a {
   transition: all 250ms ease-in-out;
 }
 
+.bg-quaternary { background-color: var(--quaternary-color); }
 .header {
   margin: 1em 0 0.5em;
   padding: 0.5em 0;
+  background-color: var(--quaternary-color);
 }
 .hidden {
   display: none;
