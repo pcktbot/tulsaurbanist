@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :incidents
+  resources :incidents do
+    collection do
+      get 'quick_new'
+      post 'quick_create'
+    end
+  end
   
   namespace :api do
     namespace :v1 do
