@@ -1,9 +1,8 @@
-<h1>Edit Incident</h1>
-
-<%= render 'form', incident: @incident %>
-
-<div class="links">
-  <%= link_to 'Show', @incident %> |
-  <%= link_to 'Back to Incidents', incidents_path %>
-</div><h1>Incidents#edit</h1>
-<p>Find me in app/views/incidents/edit.html.erb</p>
+<div class="flex justify-center align-center w-100 flex-column">
+  <h1>Edit Incident</h1>
+  <%= render 'form', incident: @incident %>
+  <div class="links">
+    <%= link_to 'Show', @incident %> |
+    <%= link_to 'Back to Incidents', incidents_path %>
+  </div>
+</div>

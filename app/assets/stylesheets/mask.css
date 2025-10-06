@@ -1,0 +1,27 @@
+.masked-text {
+  background-image: url('/tulsa-flag.png');
+  background-size: cover;
+  background-position: bottom center;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 8rem;
+  line-height: 0.8;
+  font-weight: bold;
+  text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+  .masked-text {
+    font-size: 4rem;
+    line-height: 0.8;
+    background-size: 100% 200%;
+    /* background-position: top center; */
+  }
+  
+}
+
+.hero-body {
+  width: 700px;
+  /* border: 1px solid var(--primary-color); */
+}

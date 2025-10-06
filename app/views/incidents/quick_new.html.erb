@@ -1,0 +1,46 @@
+<div class="bg-quaternary">
+  <h1>Quick Incident Entry</h1>
+  
+  <%= form_with(model: @incident, url: quick_create_incidents_path, local: true) do |form| %>
+    <% if @incident.errors.any? %>
+      <div class="error-messages">
+        <h2><%= pluralize(@incident.errors.count, "error") %> prohibited this incident from being saved:</h2>
+        <ul>
+          <% @incident.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :location_description, "Location/Address" %>
+      <%= form.text_field :location_description, placeholder: "e.g., 11th & Lewis, or 1234 S Main St", required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :fatality_count, "Number of Fatalities" %>
+      <%= form.number_field :fatality_count, min: 0, value: 1, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :brief_description, "Description" %>
+      <%= form.text_area :brief_description, rows: 4, placeholder: "Brief description of the incident..." %>
+    </div>
+
+    <div class="field">
+      <%= form.label :date_time, "Date/Time (optional)" %>
+      <%= form.datetime_local_field :date_time %>
+      <small>Leave blank to use current time</small>
+    </div>
+
+    <div class="actions control">
+      <%= form.submit "Create Incident" %>
+    </div>
+  <% end %>
+
+  <div class="links">
+    <%= link_to 'Use Full Form', new_incident_path %> |
+    <%= link_to 'Back to Incidents', incidents_path %>
+  </div>
+</div>

@@ -21,6 +21,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :brief_description, "Description" %>
+    <%= form.text_area :brief_description, rows: 3 %>
+  </div>
+
+  <div class="field">
     <%= form.label :fatality_count %>
     <%= form.number_field :fatality_count, min: 0, required: true %>
   </div>
@@ -81,7 +86,7 @@
     </div>
   </div>
 
-  <div class="actions form-submit">
+  <div class="actions control">
     <%= form.submit %>
   </div>
 <% end %>

@@ -56,6 +56,12 @@ const config = {
     compress: true,
     port: 3035,
     hot: true,
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false
+      }
+    },
     headers: {
       'Access-Control-Allow-Origin': '*'
     }

@@ -12,6 +12,10 @@ class IncidentsController < ApplicationController
     @incident = Incident.new
   end
 
+  def quick_new
+    @incident = Incident.new
+  end
+
   def create
     @incident = Incident.new(incident_params)
 
@@ -19,6 +23,18 @@ class IncidentsController < ApplicationController
       redirect_to @incident, notice: 'Incident was successfully created.'
     else
       render :new
+    end
+  end
+
+  def quick_create
+    @incident = Incident.new(quick_incident_params)
+    @incident.information_source ||= 'Manual Entry'
+    @incident.date_time ||= Time.current
+
+    if @incident.save
+      redirect_to @incident, notice: 'Incident was successfully created.'
+    else
+      render :quick_new
     end
   end
 
@@ -58,7 +74,17 @@ class IncidentsController < ApplicationController
       :verification_status,
       :latitude,
       :longitude,
-      :source_id
+      :source_id,
+      :brief_description
+    )
+  end
+
+  def quick_incident_params
+    params.require(:incident).permit(
+      :location_description,
+      :fatality_count,
+      :brief_description,
+      :date_time
     )
   end
 end
