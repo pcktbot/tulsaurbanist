@@ -1,0 +1,10 @@
+<div 
+  class="dashboard-pane <%= "pane-#{pane_type}" %>" 
+  id="<%= pane_id %>"
+  data-pane-type="<%= pane_type %>"
+  data-pane-id="<%= pane_id %>"
+>
+  <div class="pane-content">
+    <%= yield %>
+  </div>
+</div>
