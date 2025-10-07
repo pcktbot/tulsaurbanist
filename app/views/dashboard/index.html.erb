@@ -7,13 +7,10 @@
       data-split-pane-storage-key-value="dashboard-main-split"
       data-split-pane-min-size-value="300"
     >
-      <div class="split-pane dashboard-pane" data-split-pane-target="pane">
-        <div class="pane-content">
-          <div class="pane-placeholder">
-            <h2>Left Pane</h2>
-            <p>Map or table will go here</p>
-          </div>
-        </div>
+      <div class="split-pane" data-split-pane-target="pane">
+        <%= render 'pane', pane_id: 'map-pane', pane_type: 'map', pane_title: 'Incident Map' do %>
+          <%= render 'shared/map_pane' %>
+        <% end %>
       </div>
       
       <div 
@@ -22,13 +19,10 @@
         data-action="mousedown->split-pane#startDrag"
       ></div>
       
-      <div class="split-pane dashboard-pane" data-split-pane-target="pane">
-        <div class="pane-content">
-          <div class="pane-placeholder">
-            <h2>Right Pane</h2>
-            <p>Form or details will go here</p>
-          </div>
-        </div>
+      <div class="split-pane" data-split-pane-target="pane">
+        <%= render 'pane', pane_id: 'form-pane', pane_type: 'form', pane_title: 'Quick Entry' do %>
+          <%= render 'shared/form_pane' %>
+        <% end %>
       </div>
     </div>
   </div>
