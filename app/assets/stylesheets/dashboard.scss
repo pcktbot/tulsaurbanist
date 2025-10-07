@@ -56,3 +56,71 @@
 .dashboard-pane.pane-placeholder {
   flex: 1;
 }
+
+.split-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  
+  &.split-horizontal {
+    flex-direction: row;
+  }
+  
+  &.split-vertical {
+    flex-direction: column;
+  }
+}
+
+.split-pane {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pane-divider {
+  background: var(--border-color, #e5e7eb);
+  position: relative;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background: var(--border-hover, #9ca3af);
+  }
+  
+  &:active {
+    background: var(--border-active, #6b7280);
+  }
+  
+  &.divider-horizontal {
+    width: 4px;
+    cursor: col-resize;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 40px;
+      background: transparent;
+    }
+  }
+  
+  &.divider-vertical {
+    height: 4px;
+    cursor: row-resize;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 12px;
+      background: transparent;
+    }
+  }
+}

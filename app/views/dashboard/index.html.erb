@@ -1,10 +1,35 @@
 <div class="dashboard-container" data-controller="dashboard">
   <div class="dashboard-panes">
-    <%= render 'pane', pane_id: 'main', pane_type: 'placeholder' do %>
-      <div class="pane-placeholder">
-        <h2>Dashboard</h2>
-        <p>Multi-pane interface coming soon...</p>
+    <div 
+      class="split-container split-horizontal"
+      data-controller="split-pane"
+      data-split-pane-direction-value="horizontal"
+      data-split-pane-storage-key-value="dashboard-main-split"
+      data-split-pane-min-size-value="300"
+    >
+      <div class="split-pane dashboard-pane" data-split-pane-target="pane">
+        <div class="pane-content">
+          <div class="pane-placeholder">
+            <h2>Left Pane</h2>
+            <p>Map or table will go here</p>
+          </div>
+        </div>
       </div>
-    <% end %>
+      
+      <div 
+        class="pane-divider divider-horizontal" 
+        data-split-pane-target="divider"
+        data-action="mousedown->split-pane#startDrag"
+      ></div>
+      
+      <div class="split-pane dashboard-pane" data-split-pane-target="pane">
+        <div class="pane-content">
+          <div class="pane-placeholder">
+            <h2>Right Pane</h2>
+            <p>Form or details will go here</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
