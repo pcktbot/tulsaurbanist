@@ -1,6 +1,6 @@
 <div class="bg-quaternary">
 <header class="header">
-  <h1><a href="/">TulsaUrbanist</a> | Incidents</h1>
+  <a href="/">TulsaUrbanist</a> | Incidents
 </header>
 
 <div class="notice hidden"><%= notice %></div>
@@ -16,7 +16,6 @@
       <th class="left">Location</th>
       <th class="left">Description</th>
       <th class="right">Fatalities</th>
-      <th class="left">Verification</th>
       <th class="center">Actions</th>
     </tr>
   </thead>
@@ -26,8 +25,7 @@
         <td><%= incident.date_time.strftime("%B %d, %Y") %></td>
         <td><%= incident.location_description %></td>
         <td><%= incident.brief_description %></td>
-        <td class="right"><%= incident.fatality_count %></td>
-        <td><%= incident.verification_status_display %></td>        
+        <td class="right"><%= incident.fatality_count %></td>    
         <td class="actions">
           <%= link_to 'Show', incident, class: 'button control' %>
           <%= link_to 'Edit', edit_incident_path(incident), class: 'button control' %>
