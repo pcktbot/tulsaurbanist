@@ -21,7 +21,6 @@ header, h1, h2, h3, h4, h5, h6 {
 
 a {
   text-decoration: none;
-  /* color: var(--quaternary-color); */
   transition: all 250ms ease-in-out;
 }
 
@@ -67,7 +66,6 @@ tr .justify {
 }
 
 .actions {
-  background-color: var(--primary-color);
   display: flex;
   align-items: stretch;
   justify-content: space-between;
@@ -77,15 +75,11 @@ tr .justify {
 .button, .actions input[type=submit]  {
   padding: 0.5em;
   background-color: white;
-  border: 1px solid var(--primary-color);
   text-align: center;
-  transition: all 150ms ease-in-out;
 }
 
 .button:hover {
-  background-color: var(--primary-color);
-  color: white;
-  border-color: white;
+
 }
 .square-button:hover {
   box-shadow: inset 0 0 0 25px white;

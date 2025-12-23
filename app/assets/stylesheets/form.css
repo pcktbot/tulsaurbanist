@@ -28,8 +28,7 @@ form {
 }
 
 .form-submit button {
-  padding: 0.5em 2em;
-  background-color: var(--primary-color);
+  padding: 0.5em;
   color: white;
   border: none;
   text-align: center;
