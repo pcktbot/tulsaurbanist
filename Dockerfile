@@ -1,9 +1,11 @@
 # Dockerfile
 FROM ruby:3.2.2
 
-# Install dependencies
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
-RUN npm install bun
+# Install dependencies including Node.js and npm
+RUN apt-get update -qq && apt-get install -y nodejs npm postgresql-client
+
+# Install Bun globally
+RUN npm install -g bun
 
 WORKDIR /app
 
