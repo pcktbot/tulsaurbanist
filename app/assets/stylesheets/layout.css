@@ -3,6 +3,27 @@
 .justify-center { justify-content: center; }
 .justify-start { justify-content: flex-start; }
 .align-center { align-items: center; }
+.align-baseline { align-items: baseline; }
+.align-stretch { align-items: stretch; }
 
 .p-4 { padding: 1rem; }
 .w-100 { width: 100%; }
+
+.grid { display: grid; }
+.c-2 { grid-template-columns: repeat(2); }
+
+
+.scrape-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.scrape-grid--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.scrape-column {
+  min-width: 0;
+  padding: 1.5rem;
+}

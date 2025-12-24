@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     collection do
       get 'quick_new'
       post 'quick_create'
+      get 'scrape_new'
+      post 'scrape_create'
     end
   end
   

@@ -1,7 +1,23 @@
-<div class="bg-quaternary">
-  <h1>New Incident</h1>
-  <%= render 'form', incident: @incident %>
-  <div class="links">
-    <%= link_to 'Back to Incidents', incidents_path %>
+<% has_article = @article_text.present? %>
+<div class="scrape-layout">
+  <%= render 'shared/header' do %>
+    <div class="links">
+      <%= link_to 'Scrape From Article', scrape_new_incidents_path, class: 'link' %>
+      <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
+    </div>
+  <% end %>
+
+  <div class="scrape-grid <%= 'scrape-grid--single' unless has_article %>">
+    <div class="scrape-column">
+      <%= render 'form', incident: @incident %>
+    </div>
+    <% if has_article %>
+      <div class="scrape-column">
+        <div class="bg-tertiary">
+          <h2>Article Text</h2>
+          <div class="article-text"><%= @article_text %></div>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

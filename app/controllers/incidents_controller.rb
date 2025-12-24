@@ -1,4 +1,5 @@
 class IncidentsController < ApplicationController
+  before_action :authenticate_admin, except: [:index, :show]
   before_action :set_incident, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -14,6 +15,9 @@ class IncidentsController < ApplicationController
 
   def quick_new
     @incident = Incident.new
+  end
+
+  def scrape_new
   end
 
   def create
@@ -36,6 +40,24 @@ class IncidentsController < ApplicationController
     else
       render :quick_new
     end
+  end
+
+  def scrape_create
+    url = params[:article_url].to_s.strip
+    if url.blank?
+      @scrape_error = "Please provide a valid article URL."
+      return render :scrape_new
+    end
+
+    attributes = IncidentArticleScraper.scrape(url)
+    @article_text = attributes.delete(:article_text)
+    @incident = Incident.new(attributes)
+    @incident.information_source ||= "News Article"
+
+    render :new
+  rescue IncidentArticleScraper::ScrapeError => e
+    @scrape_error = e.message
+    render :scrape_new
   end
 
   def edit
