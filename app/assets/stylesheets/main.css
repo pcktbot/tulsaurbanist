@@ -6,7 +6,7 @@
   --quinary-color: #f7f2e3;
   --black: #303030;
   --lightgray: #6D6A75;
-  --palegray: #BFBDC1;
+  --palegray: #D0CCD5;
   --heading-font: "Bowlby One", sans-serif;
   --body-font: "Fira Sans", sans-serif;
 }
@@ -92,13 +92,41 @@ a {
   text-align: right;
 }
 
+/* DASHBOARD ACTIONS */
 .actions-col {
   width: 280px;
   flex-shrink: 0;
   display: flex;
+  justify-content: center;
   gap: 0.5em;
 }
-
+.action-group {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 2em;
+  align-items: center;
+  background-color: white;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.action-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+}
+.action-item:not(:last-child) {
+  border-right: 1px solid var(--black);
+}
+.action {
+  text-align: center;
+  color: var(--black);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
 .actions {
   display: flex;
   align-items: center;

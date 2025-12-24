@@ -24,9 +24,17 @@
         <div class="incident-col description-col"><%= incident.brief_description %></div>
         <div class="incident-col fatalities-col"><%= incident.fatality_count %></div>
         <div class="incident-col actions-col">
-          <%= link_to 'Show', incident, class: 'button control' %>
-          <%= link_to 'Edit', edit_incident_path(incident), class: 'button control' %>
-          <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button control destructive' %>
+          <div class="action-group">
+            <div class="action-item">
+              <%= link_to 'Show', incident, class: 'action' %>
+            </div>
+            <div class="action-item">
+              <%= link_to 'Edit', edit_incident_path(incident), class: 'action' %>
+            </div>
+            <div class="action-item">
+              <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'action destructive' %>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>

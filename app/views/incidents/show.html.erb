@@ -1,5 +1,10 @@
-<h1>Incidents#show</h1>
-<p>Find me in app/views/incidents/show.html.erb</p>
+<%= render 'shared/header' do %>
+  <div class="links">
+    <%= link_to 'Edit', edit_incident_path(@incident) %> |
+    <%= link_to 'Back to Incidents', incidents_path %> |
+    <%= link_to 'Delete', incident_path(@incident), method: :delete, data: { confirm: 'Are you sure you want to delete this incident?' } %>
+  </div>
+<% end %>
 <div class="incident-details">
   <h1>Incident Details</h1>
 
@@ -48,9 +53,5 @@
     <% end %>
   </dl>
 
-  <div class="links">
-    <%= link_to 'Edit', edit_incident_path(@incident) %> |
-    <%= link_to 'Back to Incidents', incidents_path %> |
-    <%= link_to 'Delete', incident_path(@incident), method: :delete, data: { confirm: 'Are you sure you want to delete this incident?' } %>
-  </div>
+  
 </div>
