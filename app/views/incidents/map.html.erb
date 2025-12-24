@@ -1,0 +1,16 @@
+<% content_for :head do %>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css' rel='stylesheet' />
+  <meta name="mapbox-token" content="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>">
+<% end %>
+
+<div class="">
+<%= render 'shared/header' do %>
+  <div class="links align-stretch">
+    <%= link_to 'Incidents List', incidents_path, class: 'link' %>
+  </div>
+<% end %>
+
+<div class="map-view-container" data-controller="map">
+  <div id="map" class="map-fullscreen"></div>
+</div>
+</div>

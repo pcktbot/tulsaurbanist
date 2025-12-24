@@ -1,6 +1,7 @@
 <div class="">
 <%= render 'shared/header' do %>
   <div class="links align-stretch">
+    <%= link_to 'Map', map_incidents_path, class: 'link' %>
     <%= link_to 'New Incident', new_incident_path, class: 'link' %>
   </div>
 <% end %>

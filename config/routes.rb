@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       post 'quick_create'
       get 'scrape_new'
       post 'scrape_create'
+      get 'map'
     end
   end
   

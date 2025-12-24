@@ -20,6 +20,10 @@ class IncidentsController < ApplicationController
   def scrape_new
   end
 
+  def map
+    @incidents = Incident.all
+  end
+
   def create
     @incident = Incident.new(incident_params)
 
