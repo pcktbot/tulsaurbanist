@@ -3,7 +3,7 @@ FROM ruby:3.2.2
 
 # Install dependencies
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
-RUN npm install -g bun
+RUN npm install bun
 
 WORKDIR /app
 
