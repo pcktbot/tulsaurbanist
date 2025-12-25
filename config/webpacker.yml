@@ -45,3 +45,9 @@ development:
       'Access-Control-Allow-Origin': '*'
     watch_options:
       ignored: '**/node_modules/**'
+
+production:
+  <<: *default
+  compile: false
+  mode: production
+  check_bun_integrity: false
