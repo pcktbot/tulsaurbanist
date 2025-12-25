@@ -1,3 +1,8 @@
+<% content_for :head do %>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css' rel='stylesheet' />
+  <meta name="mapbox-token" content="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>">
+<% end %>
+
 <% has_article = @article_text.present? %>
 <div class="scrape-layout">
   <%= render 'shared/header' do %>

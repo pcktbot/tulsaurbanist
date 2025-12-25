@@ -15,10 +15,7 @@
     <%= form.datetime_local_field :date_time, required: true %>
   </div>
 
-  <div class="field">
-    <%= form.label :location_description %>
-    <%= form.text_field :location_description %>
-  </div>
+  <%= render 'shared/location_lookup', form: form, show_map: true %>
 
   <div class="field">
     <%= form.label :brief_description, "Description" %>
@@ -77,18 +74,6 @@
   <div class="field">
     <%= form.label :source_id, "Source" %>
     <%= form.collection_select :source_id, Source.all, :id, :name, { include_blank: true } %>
-  </div>
-
-  <div class="coordinates">
-    <div class="field">
-      <%= form.label :latitude %>
-      <%= form.text_field :latitude %>
-    </div>
-
-    <div class="field">
-      <%= form.label :longitude %>
-      <%= form.text_field :longitude %>
-    </div>
   </div>
 
   <div class="actions">

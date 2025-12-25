@@ -1,5 +1,11 @@
 # Tulsa Urbanist - Traffic Incident Tracking System
 
+## Critical
+- Never add comments to code files. I will scold you if you do.
+- Your comments are excessive and obvious. Code should be readable on its own and we aren't doing rocket surgery here.
+- Comments make code harder to read both for you and me.
+- You are exceptionally bad at adding relevant comments, so don't do it.
+
 ## Project Overview
 
 This is a Rails application for tracking and visualizing traffic fatality incidents in Tulsa. The application provides a dashboard interface with interactive maps and data management capabilities for documenting traffic-related fatalities.
