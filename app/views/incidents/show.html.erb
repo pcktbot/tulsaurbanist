@@ -1,8 +1,8 @@
 <%= render 'shared/header' do %>
-  <div class="links">
-    <%= link_to 'Edit', edit_incident_path(@incident) %> |
-    <%= link_to 'Back to Incidents', incidents_path %> |
-    <%= link_to 'Delete', incident_path(@incident), method: :delete, data: { confirm: 'Are you sure you want to delete this incident?' } %>
+  <div class="links flex align-center justify-evenly">
+    <%= link_to 'Edit', edit_incident_path(@incident), class: 'link' %>
+    <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
+    <%= link_to 'Delete', incident_path(@incident), method: :delete, data: { confirm: 'Are you sure you want to delete this incident?' }, class: 'link' %>
   </div>
 <% end %>
 <div class="incident-details">

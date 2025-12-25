@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'incidents/geojson', to: 'incidents#geojson'
       get 'incidents/:id/geojson', to: 'incidents#show_geojson'
+      get 'geocode', to: 'geocode#search'
     end
   end
   

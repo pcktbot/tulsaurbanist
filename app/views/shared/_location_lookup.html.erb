@@ -1,0 +1,55 @@
+<%# Location lookup widget with geocoding and optional map %>
+<%
+  # Required parameters:
+  # - form: the form builder object
+  # - show_map: boolean - whether to show the interactive map
+
+  show_map ||= false
+  map_height = show_map ? '300px' : '0px'
+%>
+
+<div class="location-lookup-widget"
+     data-controller="geocode-lookup <%= 'map' if show_map %>"
+     <%= "data-map-interactive-value=\"true\"" if show_map %>
+     <%= "data-map-latitude-field-value=\"incident_latitude\"" if show_map %>
+     <%= "data-map-longitude-field-value=\"incident_longitude\"" if show_map %>>
+
+  <div class="field">
+    <%= form.label :location_description, "Address or Cross Streets" %>
+    <%= form.text_field :location_description,
+        data: {
+          geocode_lookup_target: "input",
+          action: "input->geocode-lookup#search"
+        },
+        placeholder: "e.g., 51st and Yale or 1234 S Main St, Tulsa, OK",
+        autocomplete: "off" %>
+
+    <div class="geocode-results hidden" data-geocode-lookup-target="results"></div>
+    <div class="geocode-display-name hidden" data-geocode-lookup-target="displayName"></div>
+  </div>
+
+  <% if show_map %>
+    <div class="location-map-container" style="margin: 1rem 0;">
+      <label class="map-label">Click on map to set exact location (marker is draggable)</label>
+      <div id="location-picker-map"
+           data-map-target="container"
+           style="height: <%= map_height %>; border-radius: 4px; overflow: hidden;"></div>
+    </div>
+  <% end %>
+
+  <div class="coordinates">
+    <div class="field">
+      <%= form.label :latitude %>
+      <%= form.text_field :latitude,
+          data: { geocode_lookup_target: "latitudeField" },
+          readonly: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :longitude %>
+      <%= form.text_field :longitude,
+          data: { geocode_lookup_target: "longitudeField" },
+          readonly: true %>
+    </div>
+  </div>
+</div>

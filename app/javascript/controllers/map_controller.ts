@@ -2,13 +2,25 @@ import { Controller } from "@hotwired/stimulus"
 import mapboxgl from 'mapbox-gl'
 
 export default class extends Controller {
+  static targets = ["container"]
+  static values = {
+    interactive: { type: Boolean, default: false },
+    latitudeField: String,
+    longitudeField: String
+  }
+
+  declare readonly containerTarget: HTMLElement
+  declare readonly hasContainerTarget: boolean
+  declare readonly interactiveValue: boolean
+  declare readonly hasLatitudeFieldValue: boolean
+  declare readonly hasLongitudeFieldValue: boolean
+  declare readonly latitudeFieldValue?: string
+  declare readonly longitudeFieldValue?: string
+
   map: mapboxgl.Map | null = null
+  private marker: mapboxgl.Marker | null = null
 
   connect() {
-    console.log("Map controller connected")
-
-    // You'll need to set your Mapbox access token
-    // Get one at https://account.mapbox.com/access-tokens/
     const accessToken = this.getAccessToken()
 
     if (!accessToken) {
@@ -18,22 +30,34 @@ export default class extends Controller {
 
     mapboxgl.accessToken = accessToken
 
-    // Initialize the map centered on Tulsa, OK
+    const containerId = this.hasContainerTarget ? this.containerTarget.id : 'map'
+
     this.map = new mapboxgl.Map({
-      container: 'map',
+      container: containerId,
       style: 'mapbox://styles/pcktbot/ck1kpea561ydy1co3e6f4pso6',
-      center: [-95.9928, 36.1540], // Tulsa coordinates
+      center: [-95.9928, 36.1540],
       zoom: 11
     })
 
-    // Add navigation controls
     this.map.addControl(new mapboxgl.NavigationControl())
 
-    // Load incidents data
-    this.loadIncidents()
+    if (this.interactiveValue) {
+      this.enableInteractiveMode()
+    } else {
+      this.loadIncidents()
+    }
+
+    this.element.addEventListener('geocode-lookup:coordinatesSelected', this.handleGeocodeSelection.bind(this))
   }
 
   disconnect() {
+    this.element.removeEventListener('geocode-lookup:coordinatesSelected', this.handleGeocodeSelection.bind(this))
+
+    if (this.marker) {
+      this.marker.remove()
+      this.marker = null
+    }
+
     if (this.map) {
       this.map.remove()
       this.map = null
@@ -41,13 +65,10 @@ export default class extends Controller {
   }
 
   private getAccessToken(): string {
-    // Try to get from meta tag first (we'll add this to the view)
     const metaTag = document.querySelector('meta[name="mapbox-token"]')
     if (metaTag) {
       return metaTag.getAttribute('content') || ''
     }
-
-    // Fallback to environment variable or empty string
     return ''
   }
 
@@ -61,26 +82,23 @@ export default class extends Controller {
       this.map.on('load', () => {
         if (!this.map) return
 
-        // Add incidents source
         this.map.addSource('incidents', {
           type: 'geojson',
           data: geojson
         })
 
-        // Add layer for incident points
         this.map.addLayer({
           id: 'incidents-points',
           type: 'circle',
           source: 'incidents',
           paint: {
             'circle-radius': 8,
-            'circle-color': '#b73032', // primary color
+            'circle-color': '#b73032',
             'circle-stroke-width': 2,
             'circle-stroke-color': '#ffffff'
           }
         })
 
-        // Add click handler for popups
         this.map.on('click', 'incidents-points', (e) => {
           if (!this.map || !e.features || e.features.length === 0) return
 
@@ -88,7 +106,6 @@ export default class extends Controller {
           const coordinates = (feature.geometry as any).coordinates.slice()
           const properties = feature.properties
 
-          // Create popup
           new mapboxgl.Popup()
             .setLngLat(coordinates)
             .setHTML(`
@@ -101,7 +118,6 @@ export default class extends Controller {
             .addTo(this.map)
         })
 
-        // Change cursor on hover
         this.map.on('mouseenter', 'incidents-points', () => {
           if (this.map) this.map.getCanvas().style.cursor = 'pointer'
         })
@@ -112,6 +128,64 @@ export default class extends Controller {
       })
     } catch (error) {
       console.error('Error loading incidents:', error)
+    }
+  }
+
+  private enableInteractiveMode() {
+    if (!this.map) return
+
+    this.map.on('click', (e) => {
+      this.placeMarker(e.lngLat.lat, e.lngLat.lng)
+    })
+
+    this.map.getCanvas().style.cursor = 'crosshair'
+  }
+
+  private placeMarker(lat: number, lng: number) {
+    if (!this.map) return
+
+    if (this.marker) {
+      this.marker.remove()
+    }
+
+    this.marker = new mapboxgl.Marker({
+      color: '#b73032',
+      draggable: true
+    })
+      .setLngLat([lng, lat])
+      .addTo(this.map)
+
+    this.updateFormFields(lat, lng)
+
+    this.marker.on('dragend', () => {
+      if (!this.marker) return
+      const lngLat = this.marker.getLngLat()
+      this.updateFormFields(lngLat.lat, lngLat.lng)
+    })
+  }
+
+  private updateFormFields(lat: number, lng: number) {
+    if (this.hasLatitudeFieldValue && this.hasLongitudeFieldValue) {
+      const latField = document.getElementById(this.latitudeFieldValue) as HTMLInputElement
+      const lngField = document.getElementById(this.longitudeFieldValue) as HTMLInputElement
+
+      if (latField) latField.value = lat.toFixed(6)
+      if (lngField) lngField.value = lng.toFixed(6)
+    }
+  }
+
+  private handleGeocodeSelection(event: CustomEvent) {
+    const { latitude, longitude } = event.detail
+
+    if (this.interactiveValue && latitude && longitude) {
+      this.placeMarker(latitude, longitude)
+
+      if (this.map) {
+        this.map.flyTo({
+          center: [longitude, latitude],
+          zoom: 15
+        })
+      }
     }
   }
 }
