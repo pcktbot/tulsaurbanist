@@ -16,9 +16,14 @@ RUN bundle install
 # Add application code
 COPY . .
 
-# Precompile assets
-RUN bundle exec rails assets:precompile
+# Install JavaScript dependencies with Bun
+RUN bun install
+
+# Build JavaScript assets with webpack
 RUN bun run webpack
+
+# Precompile Rails assets (skip webpacker since we already built JS)
+RUN WEBPACKER_PRECOMPILE=false bundle exec rails assets:precompile
 
 # Configure Rails
 ENV RAILS_ENV=production
