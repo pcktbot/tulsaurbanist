@@ -2,6 +2,7 @@
 .flex-column { flex-direction: column; }
 .justify-center { justify-content: center; }
 .justify-start { justify-content: flex-start; }
+.justify-evenly { justify-content: space-evenly; }
 .align-center { align-items: center; }
 .align-baseline { align-items: baseline; }
 .align-stretch { align-items: stretch; }

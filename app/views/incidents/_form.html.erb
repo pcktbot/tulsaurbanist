@@ -30,32 +30,37 @@
     <%= form.number_field :fatality_count, min: 0, required: true %>
   </div>
 
-  <fieldset class="fieldset">
-    <legend>Fatality Details by Type</legend>
-    
-    <div class="field">
-      <%= form.label :pedestrian_count %>
-      <%= form.number_field :pedestrian_count, min: 0 %>
-    </div>
+  <fieldset class="fieldset accordion-fieldset" data-controller="accordion">
+    <legend class="accordion-legend" data-action="click->accordion#toggle">
+      Fatality Details by Type
+      <span class="accordion-icon">▼</span>
+    </legend>
 
-    <div class="field">
-      <%= form.label :cyclist_count %>
-      <%= form.number_field :cyclist_count, min: 0 %>
-    </div>
+    <div class="accordion-content" data-accordion-target="content">
+      <div class="field">
+        <%= form.label :pedestrian_count %>
+        <%= form.number_field :pedestrian_count, min: 0 %>
+      </div>
 
-    <div class="field">
-      <%= form.label :motorcyclist_count %>
-      <%= form.number_field :motorcyclist_count, min: 0 %>
-    </div>
+      <div class="field">
+        <%= form.label :cyclist_count %>
+        <%= form.number_field :cyclist_count, min: 0 %>
+      </div>
 
-    <div class="field">
-      <%= form.label :vehicle_occupant_count %>
-      <%= form.number_field :vehicle_occupant_count, min: 0 %>
-    </div>
+      <div class="field">
+        <%= form.label :motorcyclist_count %>
+        <%= form.number_field :motorcyclist_count, min: 0 %>
+      </div>
 
-    <div class="field">
-      <%= form.label :other_count %>
-      <%= form.number_field :other_count, min: 0 %>
+      <div class="field">
+        <%= form.label :vehicle_occupant_count %>
+        <%= form.number_field :vehicle_occupant_count, min: 0 %>
+      </div>
+
+      <div class="field">
+        <%= form.label :other_count %>
+        <%= form.number_field :other_count, min: 0 %>
+      </div>
     </div>
   </fieldset>
 
@@ -86,7 +91,7 @@
     </div>
   </div>
 
-  <div class="actions control">
+  <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
