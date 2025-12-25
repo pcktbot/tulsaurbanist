@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
+  get 'dashboard', to: 'dashboard#index'
+  
   resources :incidents do
     collection do
       get 'quick_new'
       post 'quick_create'
+      get 'scrape_new'
+      post 'scrape_create'
+      get 'map'
     end
   end
   
@@ -13,8 +18,5 @@ Rails.application.routes.draw do
     end
   end
   
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
   root "home#index"
 end

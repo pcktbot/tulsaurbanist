@@ -8,9 +8,10 @@
     <%= render 'layouts/fonts' %>
     <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
+    <%= yield :head %>
   </head>
 
-  <body>
+  <body class="<%= controller_name %>-controller">
     <div class="main">
       <%= yield %>
     </div>

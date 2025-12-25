@@ -1,8 +1,10 @@
 # Dockerfile
 FROM ruby:3.2.2
 
-# Install dependencies
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+# Install dependencies including Node.js and npm
+RUN apt-get update -qq && apt-get install -y nodejs npm postgresql-client
+
+# Install Bun globally
 RUN npm install -g bun
 
 WORKDIR /app
@@ -25,4 +27,4 @@ ENV RAILS_SERVE_STATIC_FILES=true
 EXPOSE 3000
 
 # Start Rails
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "8080"]

@@ -89,6 +89,10 @@ GEM
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    dotenv (3.2.0)
+    dotenv-rails (3.2.0)
+      dotenv (= 3.2.0)
+      railties (>= 6.1)
     erubi (1.13.0)
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-arm-linux-gnu)
@@ -261,9 +265,11 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  dotenv-rails
   foreman
   geocoder
   jbuilder
+  nokogiri
   pg (~> 1.2)
   puma (~> 5.0)
   rails (~> 7.0.8, >= 7.0.8.4)

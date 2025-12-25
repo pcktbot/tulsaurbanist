@@ -1,40 +1,44 @@
-<div class="bg-quaternary">
-<header class="header">
-  <h1><a href="/">TulsaUrbanist</a> | Incidents</h1>
-</header>
+<div class="">
+<%= render 'shared/header' do %>
+  <div class="links align-stretch">
+    <%= link_to 'Map', map_incidents_path, class: 'link' %>
+    <%= link_to 'New Incident', new_incident_path, class: 'link' %>
+  </div>
+<% end %>
 
 <div class="notice hidden"><%= notice %></div>
 
-<div class="actions">
-  <%= link_to 'New Incident', new_incident_path, class: 'button square-button' %>
-</div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th class="left">Date</th>
-      <th class="left">Location</th>
-      <th class="left">Description</th>
-      <th class="right">Fatalities</th>
-      <th class="left">Verification</th>
-      <th class="center">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
+<div class="incidents-container">
+  <div class="incidents-header">
+    <div class="incident-col date-col">Date</div>
+    <div class="incident-col location-col">Location</div>
+    <div class="incident-col description-col">Description</div>
+    <div class="incident-col fatalities-col">Fatalities</div>
+    <div class="incident-col actions-col">Actions</div>
+  </div>
+  <div class="incidents-list">
     <% @incidents.each do |incident| %>
-      <tr>
-        <td><%= incident.date_time.strftime("%B %d, %Y") %></td>
-        <td><%= incident.location_description %></td>
-        <td><%= incident.brief_description %></td>
-        <td class="right"><%= incident.fatality_count %></td>
-        <td><%= incident.verification_status_display %></td>        
-        <td class="actions">
-          <%= link_to 'Show', incident, class: 'button control' %>
-          <%= link_to 'Edit', edit_incident_path(incident), class: 'button control' %>
-          <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button control destructive' %>
-        </td>
-      </tr>
+      <div class="incident-row">
+        <div class="incident-col date-col"><%= incident.date_time.strftime("%B %d, %Y") %></div>
+        <div class="incident-col location-col"><%= incident.location_description %></div>
+        <div class="incident-col description-col"><%= incident.brief_description %></div>
+        <div class="incident-col fatalities-col"><%= incident.fatality_count %></div>
+        <div class="incident-col actions-col">
+          <div class="action-group">
+            <div class="action-item">
+              <%= link_to 'Show', incident, class: 'action' %>
+            </div>
+            <div class="action-item">
+              <%= link_to 'Edit', edit_incident_path(incident), class: 'action' %>
+            </div>
+            <div class="action-item">
+              <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'action destructive' %>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 </div>

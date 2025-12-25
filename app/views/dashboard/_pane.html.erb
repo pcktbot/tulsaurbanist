@@ -1,0 +1,20 @@
+<%
+  pane_title ||= nil
+  pane_class ||= nil
+%>
+<div 
+  class="dashboard-pane pane-<%= pane_type %> <%= pane_class %>" 
+  id="<%= pane_id %>"
+  data-pane-type="<%= pane_type %>"
+  data-pane-id="<%= pane_id %>"
+  <%= "data-pane-title=\"#{pane_title}\"" if pane_title %>
+>
+  <% if pane_title %>
+    <div class="pane-header">
+      <h3 class="pane-title"><%= pane_title %></h3>
+    </div>
+  <% end %>
+  <div class="pane-content">
+    <%= yield %>
+  </div>
+</div>
