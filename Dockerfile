@@ -23,7 +23,8 @@ RUN bun install
 RUN bun run webpack
 
 # Precompile Rails assets (skip webpacker since we already built JS)
-RUN WEBPACKER_PRECOMPILE=false bundle exec rails assets:precompile
+# Generate temporary secret for asset precompilation, real secret should be set via env var at runtime
+RUN SECRET_KEY_BASE=placeholder WEBPACKER_PRECOMPILE=false bundle exec rails assets:precompile
 
 # Configure Rails
 ENV RAILS_ENV=production
@@ -31,5 +32,5 @@ ENV RAILS_SERVE_STATIC_FILES=true
 
 EXPOSE 3000
 
-# Start Rails
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "8080"]
+# Start Rails (run migrations first)
+CMD bundle exec rails db:prepare && bundle exec rails server -b 0.0.0.0 -p 8080
