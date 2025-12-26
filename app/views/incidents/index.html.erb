@@ -1,11 +1,9 @@
 <div class="">
 <%= render 'shared/header' do %>
-  <div class="links flex justify-evenly align-center">
-    <%= link_to 'Map', map_incidents_path, class: 'link' %>
-    <% if user_authenticated? %>
-      <%= link_to 'Create', new_incident_path, class: 'link' %>
-    <% end %>
-  </div>
+  <%= link_to 'Map', map_incidents_path, class: 'link' %>
+  <% if user_authenticated? %>
+    <%= link_to 'Create', new_incident_path, class: 'link' %>
+  <% end %>
 <% end %>
 
 <div class="notice hidden"><%= notice %></div>

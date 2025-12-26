@@ -342,7 +342,7 @@ a {
   border-radius: 10px;
   background-color: var(--quaternary-color);
   text-align: center;
-  border-width: 0;
+  border: none;
   transition: 200ms ease-in-out;
   color: var(--black);
 }
@@ -360,14 +360,19 @@ a {
 .link {
   color: var(--black);
   border-radius: 10px;
+  border: none;
   background-color: var(--quaternary-color);
   font-size: 0.7em;
+  font-weight: bold;
   padding: 0.25em 1.25em;
   transition: 200ms ease-in;
   margin-right: 0.25em;
 }
 .link:hover {
   background-color: var(--tertiary-color);
+}
+.destructive {
+  color: var(--primary-color);
 }
 
 .header {
