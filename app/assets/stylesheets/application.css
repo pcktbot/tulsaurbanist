@@ -24,17 +24,17 @@
  body {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   min-height: 100dvh;
 }
 
 body.home-controller {
   background-color: var(--secondary-color);
+  align-items: center;
 }
 
 .main {
   width: 100%;
-  height: 100%;
   max-width: 1600px;
   margin: 0 auto;
 }

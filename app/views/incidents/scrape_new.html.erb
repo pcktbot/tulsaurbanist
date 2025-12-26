@@ -1,5 +1,8 @@
 <div class="">
-  <h1>Scrape Incident from Article</h1>
+  <%= render 'shared/header' do %>
+    <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
+  <% end %>
+  
 
   <% if @scrape_error.present? %>
     <div class="error-messages">
@@ -17,8 +20,4 @@
       <%= form.submit "Scrape Article" %>
     </div>
   <% end %>
-
-  <div class="links">
-    <%= link_to 'Back to Incidents', incidents_path %>
-  </div>
 </div>

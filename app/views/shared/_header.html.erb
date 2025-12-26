@@ -1,4 +1,9 @@
 <header class="header flex align-stretch">
   <a class="home-link" href="/">TulsaUrbanist</a>
-  <%= yield %>
+  <div class="links flex justify-evenly align-center">
+    <%= yield %>
+    <% unless user_authenticated? %>
+      <button onclick="window.location.href='<%= new_incident_path %>'" class="link login-link" type="button">Login</button>
+    <% end %>
+  </div>
 </header>

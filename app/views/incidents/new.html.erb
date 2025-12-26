@@ -6,10 +6,8 @@
 <% has_article = @article_text.present? %>
 <div class="scrape-layout">
   <%= render 'shared/header' do %>
-    <div class="links flex justify-evenly align-center">
-      <%= link_to 'Scrape From Article', scrape_new_incidents_path, class: 'link' %>
-      <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
-    </div>
+    <%= link_to 'Scrape From Article', scrape_new_incidents_path, class: 'link' %>
+    <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
   <% end %>
 
   <div class="scrape-grid <%= 'scrape-grid--single' unless has_article %>">
