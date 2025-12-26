@@ -58,3 +58,6 @@ body:not(.home-controller) .main {
 
 /* Utility classes */
 .hidden { display: none; }
+
+/* Resets */
+a { text-decoration: none; }

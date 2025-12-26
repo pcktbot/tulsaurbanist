@@ -10,9 +10,7 @@
 
 <div class="location-lookup-widget"
      data-controller="geocode-lookup <%= 'map' if show_map %>"
-     <%= "data-map-interactive-value=\"true\"" if show_map %>
-     <%= "data-map-latitude-field-value=\"incident_latitude\"" if show_map %>
-     <%= "data-map-longitude-field-value=\"incident_longitude\"" if show_map %>>
+     <%= "data-map-interactive-value=\"true\"" if show_map %>>
 
   <div class="field">
     <%= form.label :location_description, "Address or Cross Streets" %>
@@ -40,16 +38,24 @@
   <div class="coordinates">
     <div class="field">
       <%= form.label :latitude %>
-      <%= form.text_field :latitude,
-          data: { geocode_lookup_target: "latitudeField" },
-          readonly: true %>
+      <%= form.number_field :latitude,
+          id: "incident_latitude",
+          step: "any",
+          data: {
+            geocode_lookup_target: "latitudeField",
+            action: "change->geocode-lookup#updateMapFromFields"
+          } %>
     </div>
 
     <div class="field">
       <%= form.label :longitude %>
-      <%= form.text_field :longitude,
-          data: { geocode_lookup_target: "longitudeField" },
-          readonly: true %>
+      <%= form.number_field :longitude,
+          id: "incident_longitude",
+          step: "any",
+          data: {
+            geocode_lookup_target: "longitudeField",
+            action: "change->geocode-lookup#updateMapFromFields"
+          } %>
     </div>
   </div>
 </div>

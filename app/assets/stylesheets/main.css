@@ -24,14 +24,17 @@ h1.title {
   font-family: var(--heading-font);
   font-weight: 700;
   font-style: normal;
-}
-
-a {
-  text-decoration: none;
+  font-size: 1.5rem;
 }
 
 .header {
   margin: 0 0.5em;
+  padding: 0 0 1em;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--black);
+  margin: 0;
+  padding: 0 0 0 1rem;
 }
 
 .nav-link {
@@ -62,7 +65,7 @@ a {
 
 .incidents-container {
   width: 100%;
-  padding: 0.5em;
+  padding: 0;
   display: flex;
   flex-direction: column;
   height: calc(100vh - 38px);
@@ -73,6 +76,7 @@ a {
   display: flex;
   gap: 1em;
   padding: 0.5em;
+  border-bottom: 1px solid var(--black);
   font-weight: bold;
   font-family: var(--heading-font);
 }
@@ -84,6 +88,7 @@ a {
   flex: 1;
   overflow-y: auto;
   min-height: 0;
+  padding: 0.5em;
 }
 
 .incident-row {
@@ -170,22 +175,20 @@ a {
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 10;
-  background-color: white;
+  z-index: 4;
+  background-color: var(--quaternary-color);
   border: none;
-  border-radius: 8px;
   width: 48px;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: background-color 200ms ease-in-out;
 }
 
 .map-panel-toggle:hover {
-  background-color: var(--quaternary-color);
+  background-color: var(--tertiary-color);
 }
 
 .toggle-icon {
@@ -355,6 +358,7 @@ a {
 /* LINKS TYPICALLY IN HEADER */
 .links {
   border-left: 1px solid var(--black);
+  background-color: white;
   padding: 0 1.5rem;
 }
 .link {
@@ -375,15 +379,7 @@ a {
   color: var(--primary-color);
 }
 
-.header {
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--black);
-  font-size: 1.5rem;
-  margin: 0;
-  padding: 0 1rem;
-}
+
 .control {
   flex-grow: 1;
 }
