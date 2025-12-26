@@ -3,8 +3,12 @@
     <div class="placeholder-icon">📝</div>
     <h3>Incident Form</h3>
     <p>Quick entry or edit form will load here</p>
-    <div class="placeholder-actions">
-      <%= link_to 'Quick Entry', quick_new_incidents_path, class: 'btn btn-primary', data: { turbo_frame: 'form-content' } %>
-    </div>
+    <% if user_authenticated? %>
+      <div class="placeholder-actions">
+        <%= link_to 'Quick Entry', quick_new_incidents_path, class: 'btn btn-primary', data: { turbo_frame: 'form-content' } %>
+      </div>
+    <% else %>
+      <p><%= link_to 'Login', quick_new_incidents_path, class: 'link' %> to create incidents</p>
+    <% end %>
   </div>
 </div>

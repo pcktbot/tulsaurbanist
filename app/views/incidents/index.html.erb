@@ -2,7 +2,9 @@
 <%= render 'shared/header' do %>
   <div class="links flex justify-evenly align-center">
     <%= link_to 'Map', map_incidents_path, class: 'link' %>
-    <%= link_to 'Create', new_incident_path, class: 'link' %>
+    <% if user_authenticated? %>
+      <%= link_to 'Create', new_incident_path, class: 'link' %>
+    <% end %>
   </div>
 <% end %>
 
@@ -29,12 +31,14 @@
             <div class="action-item">
               <%= link_to 'Show', incident, class: 'action' %>
             </div>
-            <div class="action-item">
-              <%= link_to 'Edit', edit_incident_path(incident), class: 'action' %>
-            </div>
-            <div class="action-item">
-              <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'action destructive' %>
-            </div>
+            <% if user_authenticated? %>
+              <div class="action-item">
+                <%= link_to 'Edit', edit_incident_path(incident), class: 'action' %>
+              </div>
+              <div class="action-item">
+                <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'action destructive' %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>

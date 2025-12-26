@@ -3,11 +3,19 @@
   <meta name="mapbox-token" content="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>">
 <% end %>
 
-<div class="flex justify-center align-center w-100 flex-column">
-  <h1>Edit Incident</h1>
-  <%= render 'form', incident: @incident %>
-  <div class="links flex align-center justify-end">
-    <%= link_to 'Show', @incident, class: 'link' %>
-    <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
+<div class="">
+  <%= render 'shared/header' do %>
+    <div class="links flex align-center justify-evenly">
+      <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
+    </div>
+  <% end %>
+
+  <div class="flex justify-center align-center w-100 flex-column">
+    <h1>Edit Incident</h1>
+    <%= render 'form', incident: @incident %>
+    <div class="links flex align-center justify-end">
+      <%= link_to 'Show', @incident, class: 'link' %>
+      <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
+    </div>
   </div>
 </div>

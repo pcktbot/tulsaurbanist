@@ -1,4 +1,9 @@
 <header class="header flex align-stretch">
   <a class="home-link" href="/">TulsaUrbanist</a>
   <%= yield %>
+  <% unless user_authenticated? %>
+    <div class="auth-actions">
+      <%= link_to 'Login', new_incident_path, class: 'link login-link' %>
+    </div>
+  <% end %>
 </header>

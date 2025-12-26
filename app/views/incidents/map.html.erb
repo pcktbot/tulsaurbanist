@@ -10,7 +10,73 @@
   </div>
 <% end %>
 
-<div class="map-view-container" data-controller="map">
+<div class="map-view-container" data-controller="map map-panel" data-map-panel-open-class="open">
   <div id="map" class="map-fullscreen"></div>
+
+  <button class="map-panel-toggle"
+          data-map-panel-target="toggle"
+          data-action="click->map-panel#toggle">
+    <span class="toggle-icon">☰</span>
+  </button>
+
+  <div class="map-panel" data-map-panel-target="panel">
+    <div class="map-panel-header">
+      <h2>Filters & Tools</h2>
+      <button class="panel-close" data-action="click->map-panel#close">×</button>
+    </div>
+
+    <div class="map-panel-content">
+      <section class="panel-section">
+        <h3>Date Range</h3>
+        <div class="filter-group">
+          <label>From</label>
+          <input type="date" class="filter-input">
+          <label>To</label>
+          <input type="date" class="filter-input">
+        </div>
+      </section>
+
+      <section class="panel-section">
+        <h3>Fatality Type</h3>
+        <div class="filter-group">
+          <label class="checkbox-label">
+            <input type="checkbox" checked> Pedestrian
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" checked> Cyclist
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" checked> Motorcyclist
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" checked> Vehicle Occupant
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" checked> Other
+          </label>
+        </div>
+      </section>
+
+      <section class="panel-section">
+        <h3>Verification Status</h3>
+        <div class="filter-group">
+          <label class="checkbox-label">
+            <input type="checkbox" checked> Verified
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" checked> Partially Verified
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" checked> Unverified
+          </label>
+        </div>
+      </section>
+
+      <div class="panel-actions">
+        <button class="button">Apply Filters</button>
+        <button class="button-secondary">Reset</button>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
