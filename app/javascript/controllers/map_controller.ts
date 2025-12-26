@@ -4,21 +4,18 @@ import mapboxgl from 'mapbox-gl'
 export default class extends Controller {
   static targets = ["container"]
   static values = {
-    interactive: { type: Boolean, default: false },
-    latitudeField: String,
-    longitudeField: String
+    interactive: { type: Boolean, default: false }
   }
 
   declare readonly containerTarget: HTMLElement
   declare readonly hasContainerTarget: boolean
   declare readonly interactiveValue: boolean
-  declare readonly hasLatitudeFieldValue: boolean
-  declare readonly hasLongitudeFieldValue: boolean
-  declare readonly latitudeFieldValue?: string
-  declare readonly longitudeFieldValue?: string
 
   map: mapboxgl.Map | null = null
   private marker: mapboxgl.Marker | null = null
+  private geocodeSelectionHandler = (event: Event) => {
+    this.handleGeocodeSelection(event as CustomEvent)
+  }
 
   connect() {
     const accessToken = this.getAccessToken()
@@ -34,7 +31,7 @@ export default class extends Controller {
 
     this.map = new mapboxgl.Map({
       container: containerId,
-      style: 'mapbox://styles/pcktbot/ck1kpea561ydy1co3e6f4pso6',
+      style: 'mapbox://styles/pcktbot/ck77pm7sb09if1inzw8p9uxft',
       center: [-95.9928, 36.1540],
       zoom: 11
     })
@@ -47,11 +44,11 @@ export default class extends Controller {
       this.loadIncidents()
     }
 
-    this.element.addEventListener('geocode-lookup:coordinatesSelected', this.handleGeocodeSelection.bind(this))
+    this.element.addEventListener('geocode-lookup:coordinatesSelected', this.geocodeSelectionHandler)
   }
 
   disconnect() {
-    this.element.removeEventListener('geocode-lookup:coordinatesSelected', this.handleGeocodeSelection.bind(this))
+    this.element.removeEventListener('geocode-lookup:coordinatesSelected', this.geocodeSelectionHandler)
 
     if (this.marker) {
       this.marker.remove()
@@ -155,23 +152,19 @@ export default class extends Controller {
       .setLngLat([lng, lat])
       .addTo(this.map)
 
-    this.updateFormFields(lat, lng)
+    this.notifyCoordinateChange(lat, lng)
 
     this.marker.on('dragend', () => {
       if (!this.marker) return
       const lngLat = this.marker.getLngLat()
-      this.updateFormFields(lngLat.lat, lngLat.lng)
+      this.notifyCoordinateChange(lngLat.lat, lngLat.lng)
     })
   }
 
-  private updateFormFields(lat: number, lng: number) {
-    if (this.hasLatitudeFieldValue && this.hasLongitudeFieldValue) {
-      const latField = document.getElementById(this.latitudeFieldValue) as HTMLInputElement
-      const lngField = document.getElementById(this.longitudeFieldValue) as HTMLInputElement
-
-      if (latField) latField.value = lat.toFixed(6)
-      if (lngField) lngField.value = lng.toFixed(6)
-    }
+  private notifyCoordinateChange(lat: number, lng: number) {
+    this.dispatch('markerMoved', {
+      detail: { latitude: lat, longitude: lng }
+    })
   }
 
   private handleGeocodeSelection(event: CustomEvent) {

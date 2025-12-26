@@ -22,12 +22,36 @@ export default class extends Controller {
   declare readonly apiUrlValue: string
 
   private debounceTimer?: number
+  private markerMovedHandler = (event: Event) => {
+    const customEvent = event as CustomEvent
+    const { latitude, longitude } = customEvent.detail
+    this.setCoordinates(latitude, longitude)
+  }
 
   connect() {
-    console.log("Geocode lookup controller connected")
+    this.element.addEventListener('map:markerMoved', this.markerMovedHandler)
+    this.loadExistingCoordinates()
+  }
+
+  private loadExistingCoordinates() {
+    setTimeout(() => {
+      if (this.latitudeFieldTarget && this.longitudeFieldTarget &&
+          this.latitudeFieldTarget.value && this.longitudeFieldTarget.value) {
+        const lat = parseFloat(this.latitudeFieldTarget.value)
+        const lng = parseFloat(this.longitudeFieldTarget.value)
+
+        if (!isNaN(lat) && !isNaN(lng)) {
+          this.dispatch("coordinatesSelected", {
+            detail: { latitude: lat, longitude: lng }
+          })
+        }
+      }
+    }, 100)
   }
 
   disconnect() {
+    this.element.removeEventListener('map:markerMoved', this.markerMovedHandler)
+
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer)
     }
@@ -98,6 +122,9 @@ export default class extends Controller {
   }
 
   setCoordinates(lat: number, lng: number, displayName?: string) {
+    const currentLat = parseFloat(this.latitudeFieldTarget.value)
+    const currentLng = parseFloat(this.longitudeFieldTarget.value)
+
     this.latitudeFieldTarget.value = lat.toString()
     this.longitudeFieldTarget.value = lng.toString()
 
@@ -106,9 +133,22 @@ export default class extends Controller {
       this.displayNameTarget.classList.remove('hidden')
     }
 
-    this.dispatch("coordinatesSelected", {
-      detail: { latitude: lat, longitude: lng, displayName }
-    })
+    if (currentLat !== lat || currentLng !== lng) {
+      this.dispatch("coordinatesSelected", {
+        detail: { latitude: lat, longitude: lng, displayName }
+      })
+    }
+  }
+
+  updateMapFromFields() {
+    const lat = parseFloat(this.latitudeFieldTarget.value)
+    const lng = parseFloat(this.longitudeFieldTarget.value)
+
+    if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+      this.dispatch("coordinatesSelected", {
+        detail: { latitude: lat, longitude: lng }
+      })
+    }
   }
 
   clearResults() {
