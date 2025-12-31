@@ -12,6 +12,17 @@
   </head>
 
   <body class="<%= controller_name %>-controller">
+    <% if notice.present? || alert.present? %>
+      <div class="flash-messages">
+        <% if notice %>
+          <p class="notice"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert"><%= alert %></p>
+        <% end %>
+      </div>
+    <% end %>
+
     <div class="main">
       <%= yield %>
     </div>
