@@ -62,17 +62,30 @@
 
   <div class="redesign-toolbar">
     <div class="btn-group">
-      <button type="button" data-action="redesign-map#toggleRoadMode" data-redesign-map-target="roadButton" class="btn btn-small btn-secondary">
-        Draw Road
-      </button>
-      <button type="button" data-action="redesign-map#toggle3DView" data-redesign-map-target="viewButton" class="btn btn-small btn-secondary">
+      <button
+        type="button"
+        data-lucide="pen-tool"
+        data-action="redesign-map#toggleRoadMode"
+        data-redesign-map-target="roadButton"
+        class="btn btn-small"
+        title="Draw Road"
+      ></button>
+      <button
+        type="button"
+        data-action="redesign-map#toggle3DView"
+        data-redesign-map-target="viewButton"
+        class="btn btn-small">
         2D View
       </button>
-      <button type="button" data-action="redesign-map#undo" class="btn btn-small btn-secondary">
-        Undo
-      </button>
-      <%= link_to "Back", redesigns_path, class: "btn-secondary" %>
-      <%= link_to "Edit Settings", edit_redesign_path(@redesign), class: "btn btn-small btn-secondary" %>
+      <button
+        type="button"
+        data-action="redesign-map#undo"
+        data-lucide="undo"
+        class="btn btn-small"
+        title="Undo"
+      ></button>
+      <%= link_to "Back", redesigns_path, data: { lucide: 'arrow-big-left' }, class: "btn btn-small bg-quinary" %>
+      <%= link_to "Edit Settings", edit_redesign_path(@redesign), class: "btn btn-small bg-quinary" %>
     </div>
   </div>
 </div>

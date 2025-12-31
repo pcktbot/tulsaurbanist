@@ -1,0 +1,38 @@
+.btn {
+  transition: 200ms ease-in;
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0.5em 0.75em;
+}
+
+.btn:hover {}
+.btn-small {
+  font-size: 0.8em !important;
+  padding: 0.25em 0.5em !important;
+}
+
+.btn-group {
+  background-color: var(--quinary-color);
+  border: 1px solid var(--palegray);
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-group > *:not(:last-child) {
+  border-right: 1px solid var(--palegray);
+}
+
+[data-lucide] {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.btn [data-lucide],
+a [data-lucide] {
+  width: 1.2em;
+  height: 1.2em;
+}

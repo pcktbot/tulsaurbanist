@@ -1,5 +1,4 @@
 const path = require('path');
-const { EsbuildPlugin } = require('esbuild-loader');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 /** @type {import('webpack').Configuration} */
@@ -22,29 +21,24 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: 'ts-loader'
+      },
+      {
         test: /\.js$/,
         include: /node_modules\/@hotwired/,
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env']
         }
-      },
-      {
-        test: /\.(ts|js)$/,
-        loader: 'esbuild-loader',
-        options: {
-          loader: 'ts',
-          target: 'es2020',
-          tsconfigRaw: require('./tsconfig.json')
-        }
       }
     ]
   },
   plugins: [
-    new EsbuildPlugin(),
     new WebpackManifestPlugin({
       publicPath: '/packs/',
-      writeToFileEmit: true      
+      writeToFileEmit: true
     })
   ],
   mode: 'development',

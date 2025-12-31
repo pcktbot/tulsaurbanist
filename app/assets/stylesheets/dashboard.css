@@ -1,0 +1,255 @@
+.dashboard-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-panes {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.dashboard-pane {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-primary, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  position: relative;
+}
+
+.pane-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.pane-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-secondary, #6b7280);
+}
+
+.pane-placeholder h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary, #111827);
+}
+
+.pane-placeholder p {
+  font-size: 1rem;
+}
+
+.pane-placeholder,
+.dashboard-pane.pane-placeholder {
+  flex: 1;
+}
+
+.split-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.split-container.split-horizontal {
+  flex-direction: row;
+}
+
+.split-container.split-vertical {
+  flex-direction: column;
+}
+
+.split-pane {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pane-divider {
+  background: var(--border-color, #e5e7eb);
+  position: relative;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.pane-divider:hover {
+  background: var(--border-hover, #9ca3af);
+}
+
+.pane-divider:active {
+  background: var(--border-active, #6b7280);
+}
+
+.pane-divider.divider-horizontal {
+  width: 4px;
+  cursor: col-resize;
+}
+
+.pane-divider.divider-horizontal::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 40px;
+  background: transparent;
+}
+
+.pane-divider.divider-vertical {
+  height: 4px;
+  cursor: row-resize;
+}
+
+.pane-divider.divider-vertical::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 12px;
+  background: transparent;
+}
+
+.pane-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  flex-shrink: 0;
+}
+
+.pane-header .pane-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+}
+
+.pane-map .pane-content {
+  padding: 0;
+}
+
+.pane-map .map-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.pane-table .table-container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.pane-form .form-container {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.pane-header-type .pane-content {
+  padding: 0;
+}
+
+.pane-header-type .header-container {
+  width: 100%;
+  border-bottom: 2px solid var(--border-color, #e5e7eb);
+}
+
+.pane-header-type .header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  gap: 2rem;
+}
+
+.pane-header-type .header-logo h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #111827);
+}
+
+.pane-header-type .header-nav {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.pane-header-type .nav-link {
+  text-decoration: none;
+  color: var(--text-secondary, #6b7280);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.pane-header-type .nav-link:hover {
+  color: var(--text-primary, #111827);
+}
+
+.pane-header-type .header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.map-placeholder,
+.table-placeholder,
+.form-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-secondary, #6b7280);
+  text-align: center;
+}
+
+.map-placeholder .placeholder-icon,
+.table-placeholder .placeholder-icon,
+.form-placeholder .placeholder-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.map-placeholder h3,
+.table-placeholder h3,
+.form-placeholder h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary, #111827);
+}
+
+.map-placeholder p,
+.table-placeholder p,
+.form-placeholder p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.map-placeholder .placeholder-actions,
+.table-placeholder .placeholder-actions,
+.form-placeholder .placeholder-actions {
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  font-weight: 100;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
