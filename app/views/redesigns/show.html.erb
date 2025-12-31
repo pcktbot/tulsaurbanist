@@ -1,0 +1,78 @@
+<% content_for :head do %>
+  <meta name="mapbox-token" content="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js"></script>
+<% end %>
+
+<div class="redesign-editor"
+     data-controller="redesign-map shape-palette shape-controls"
+     data-redesign-map-redesign-id-value="<%= @redesign.id %>"
+     data-redesign-map-center-lat-value="<%= @redesign.center_latitude %>"
+     data-redesign-map-center-lng-value="<%= @redesign.center_longitude %>"
+     data-redesign-map-max-radius-value="<%= @redesign.max_radius %>">
+
+  <div class="redesign-sidebar" data-shape-palette-target="sidebar">
+    <%= render 'shape_palette' %>
+
+    <div class="shape-controls-panel" data-shape-controls-target="panel" style="display: none;">
+      <h4>Shape Controls</h4>
+      <div data-shape-controls-target="shapeInfo"></div>
+
+      <div class="rotation-input">
+        <label>Rotation:</label>
+        <input type="number"
+               data-shape-controls-target="rotationInput"
+               data-action="change->shape-controls#setRotation"
+               min="0"
+               max="359"
+               step="1"
+               placeholder="0">
+        <span>°</span>
+      </div>
+
+      <div class="rotation-input">
+        <label>Height:</label>
+        <input type="number"
+               data-shape-controls-target="heightInput"
+               data-action="change->shape-controls#setHeight"
+               min="0"
+               max="200"
+               step="1"
+               placeholder="0">
+        <span>m</span>
+      </div>
+
+      <div class="control-buttons">
+        <button type="button" class="btn-icon" data-action="shape-controls#rotateLeft" title="Rotate Left 15°">
+          ⟲ 15°
+        </button>
+        <button type="button" class="btn-icon" data-action="shape-controls#rotateRight" title="Rotate Right 15°">
+          ⟳ 15°
+        </button>
+        <button type="button" class="btn-danger" data-action="shape-controls#deleteShape">
+          Delete
+        </button>
+      </div>
+
+      <p class="hint">💡 Drag corner handles to rotate freely</p>
+    </div>
+  </div>
+
+  <div class="redesign-map-container" data-redesign-map-target="container"></div>
+
+  <div class="redesign-toolbar">
+    <div class="btn-group">
+      <button type="button" data-action="redesign-map#toggleRoadMode" data-redesign-map-target="roadButton" class="btn btn-small btn-secondary">
+        Draw Road
+      </button>
+      <button type="button" data-action="redesign-map#toggle3DView" data-redesign-map-target="viewButton" class="btn btn-small btn-secondary">
+        2D View
+      </button>
+      <button type="button" data-action="redesign-map#undo" class="btn btn-small btn-secondary">
+        Undo
+      </button>
+      <%= link_to "Back", redesigns_path, class: "btn-secondary" %>
+      <%= link_to "Edit Settings", edit_redesign_path(@redesign), class: "btn btn-small btn-secondary" %>
+    </div>
+  </div>
+</div>

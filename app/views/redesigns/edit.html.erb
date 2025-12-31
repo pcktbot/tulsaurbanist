@@ -1,0 +1,46 @@
+<div class="redesign-form">
+  <h1>Edit Redesign</h1>
+
+  <%= form_with(model: @redesign, local: true) do |f| %>
+    <% if @redesign.errors.any? %>
+      <div class="error-messages">
+        <h3><%= pluralize(@redesign.errors.count, "error") %> prohibited this redesign from being saved:</h3>
+        <ul>
+          <% @redesign.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :description %>
+      <%= f.text_area :description, rows: 4 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :center_latitude %>
+      <%= f.number_field :center_latitude, step: :any, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :center_longitude %>
+      <%= f.number_field :center_longitude, step: :any, required: true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :max_radius, "Max Radius (meters)" %>
+      <%= f.number_field :max_radius, step: :any, required: true %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Update Redesign", class: "btn btn-primary" %>
+      <%= link_to "Cancel", @redesign, class: "btn" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,27 @@
+<div class="redesigns-index">
+  <h1>My Redesigns</h1>
+
+  <%= link_to "New Redesign", new_redesign_path, class: "btn btn-primary" %>
+
+  <div class="redesigns-list">
+    <% if @redesigns.any? %>
+      <% @redesigns.each do |redesign| %>
+        <div class="redesign-card">
+          <h3><%= link_to redesign.name, redesign %></h3>
+          <% if redesign.description.present? %>
+            <p><%= redesign.description %></p>
+          <% end %>
+          <p class="redesign-meta">
+            Updated <%= time_ago_in_words(redesign.updated_at) %> ago
+          </p>
+          <div class="redesign-actions">
+            <%= link_to "Edit", redesign, class: "btn btn-sm" %>
+            <%= button_to "Delete", redesign, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>You haven't created any redesigns yet.</p>
+    <% end %>
+  </div>
+</div>
