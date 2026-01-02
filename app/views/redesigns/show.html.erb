@@ -64,28 +64,32 @@
     <div class="btn-group">
       <button
         type="button"
-        data-lucide="pen-tool"
         data-action="redesign-map#toggleRoadMode"
         data-redesign-map-target="roadButton"
         class="btn btn-small"
         title="Draw Road"
-      ></button>
+      ><i data-lucide="pen-tool"></i></button>
       <button
         type="button"
         data-action="redesign-map#toggle3DView"
         data-redesign-map-target="viewButton"
         class="btn btn-small">
-        2D View
+        3D View
       </button>
       <button
         type="button"
         data-action="redesign-map#undo"
-        data-lucide="undo"
         class="btn btn-small"
         title="Undo"
-      ></button>
-      <%= link_to "Back", redesigns_path, data: { lucide: 'arrow-big-left' }, class: "btn btn-small bg-quinary" %>
-      <%= link_to "Edit Settings", edit_redesign_path(@redesign), class: "btn btn-small bg-quinary" %>
+      ><i data-lucide="undo"></i></button>
+      <%=
+        link_to redesigns_path,
+        class: "btn btn-small bg-quinary" do
+      %><i data-lucide="arrow-big-left"></i><% end %>
+      <%=
+        link_to edit_redesign_path(@redesign),
+        class: "btn btn-small bg-quinary" do
+      %><i data-lucide="settings"></i><% end %>
     </div>
   </div>
 </div>

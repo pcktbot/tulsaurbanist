@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import mapboxgl from "mapbox-gl"
+import { initializeIcons } from "../lib/icons"
 
 interface PlacedShape {
   id: number
@@ -42,7 +43,7 @@ export default class extends Controller {
   isRotating: boolean = false
   shapesData: PlacedShape[] = []
   rotationHandles: mapboxgl.Marker[] = []
-  is3DView: boolean = true
+  is3DView: boolean = false
 
   connect() {
     this.initializeMap()
@@ -68,7 +69,7 @@ export default class extends Controller {
       style: 'mapbox://styles/pcktbot/ck77pm7sb09if1inzw8p9uxft',
       center: [this.centerLngValue, this.centerLatValue],
       zoom: 15,
-      pitch: 60,
+      pitch: 0,
       bearing: 0
     })
 
@@ -711,7 +712,8 @@ export default class extends Controller {
       this.roadNodes = []
       this.selectedTemplate = null
       this.clearSelection()
-      this.roadButtonTarget.textContent = 'Complete Road'
+      this.roadButtonTarget.innerHTML = '<i data-lucide="pen-tool"></i>Complete Road'
+      initializeIcons()
       this.map!.getCanvas().style.cursor = 'crosshair'
     }
   }
@@ -726,7 +728,8 @@ export default class extends Controller {
     this.roadPreviewNodes.push(marker)
 
     if (this.roadNodes.length >= 2) {
-      this.roadButtonTarget.textContent = `Complete Road (${this.roadNodes.length} nodes)`
+      this.roadButtonTarget.innerHTML = `<i data-lucide="pen-tool"></i>Complete Road (${this.roadNodes.length} nodes)`
+      initializeIcons()
     }
   }
 
@@ -735,6 +738,8 @@ export default class extends Controller {
       alert("Road must have at least 2 nodes")
       return
     }
+
+    const smoothedNodes = this.smoothRoadPath(this.roadNodes)
 
     try {
       const response = await fetch(`/api/v1/redesigns/${this.redesignIdValue}/placed_shapes`, {
@@ -745,11 +750,11 @@ export default class extends Controller {
         },
         body: JSON.stringify({
           shape_type: 'road',
-          latitude: this.roadNodes[0].lat,
-          longitude: this.roadNodes[0].lng,
+          latitude: smoothedNodes[0].lat,
+          longitude: smoothedNodes[0].lng,
           width: 7,
           color: '#696969',
-          road_nodes: this.roadNodes.map((node, index) => ({
+          road_nodes: smoothedNodes.map((node, index) => ({
             latitude: node.lat,
             longitude: node.lng,
             sequence_order: index
@@ -768,12 +773,64 @@ export default class extends Controller {
     }
   }
 
+  smoothRoadPath(nodes: Array<{ lat: number; lng: number }>): Array<{ lat: number; lng: number }> {
+    if (nodes.length < 3) return nodes
+
+    const smoothed: Array<{ lat: number; lng: number }> = []
+    smoothed.push(nodes[0])
+
+    for (let i = 0; i < nodes.length - 1; i++) {
+      const p0 = i === 0 ? nodes[0] : nodes[i - 1]
+      const p1 = nodes[i]
+      const p2 = nodes[i + 1]
+      const p3 = i === nodes.length - 2 ? nodes[i + 1] : nodes[i + 2]
+
+      const segments = 10
+      for (let t = 0; t < segments; t++) {
+        const u = t / segments
+        const point = this.catmullRomSpline(p0, p1, p2, p3, u)
+        smoothed.push(point)
+      }
+    }
+
+    smoothed.push(nodes[nodes.length - 1])
+    return smoothed
+  }
+
+  catmullRomSpline(
+    p0: { lat: number; lng: number },
+    p1: { lat: number; lng: number },
+    p2: { lat: number; lng: number },
+    p3: { lat: number; lng: number },
+    t: number
+  ): { lat: number; lng: number } {
+    const t2 = t * t
+    const t3 = t2 * t
+
+    const lat = 0.5 * (
+      (2 * p1.lat) +
+      (-p0.lat + p2.lat) * t +
+      (2 * p0.lat - 5 * p1.lat + 4 * p2.lat - p3.lat) * t2 +
+      (-p0.lat + 3 * p1.lat - 3 * p2.lat + p3.lat) * t3
+    )
+
+    const lng = 0.5 * (
+      (2 * p1.lng) +
+      (-p0.lng + p2.lng) * t +
+      (2 * p0.lng - 5 * p1.lng + 4 * p2.lng - p3.lng) * t2 +
+      (-p0.lng + 3 * p1.lng - 3 * p2.lng + p3.lng) * t3
+    )
+
+    return { lat, lng }
+  }
+
   clearRoadMode() {
     this.placementMode = null
     this.roadNodes = []
     this.roadPreviewNodes.forEach(marker => marker.remove())
     this.roadPreviewNodes = []
-    this.roadButtonTarget.textContent = 'Draw Road'
+    this.roadButtonTarget.innerHTML = '<i data-lucide="pen-tool"></i>Draw Road'
+    initializeIcons()
     this.map!.getCanvas().style.cursor = ''
   }
 
