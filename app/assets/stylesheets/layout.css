@@ -28,3 +28,11 @@
   min-width: 0;
   padding: 1.5rem;
 }
+
+.flash-messages {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translate(0, -50%);
+  z-index: 11;
+}

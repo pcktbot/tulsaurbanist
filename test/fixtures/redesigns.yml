@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  name: MyString
+  description: MyText
+  center_latitude: 1.5
+  center_longitude: 1.5
+  max_radius: 1.5
+
+two:
+  user: two
+  name: MyString
+  description: MyText
+  center_latitude: 1.5
+  center_longitude: 1.5
+  max_radius: 1.5

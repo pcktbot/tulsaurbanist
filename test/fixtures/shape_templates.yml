@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  category: MyString
+  width: 1.5
+  depth: 1.5
+  color: MyString
+  is_path: false
+  user: one
+  template_data: 
+
+two:
+  name: MyString
+  category: MyString
+  width: 1.5
+  depth: 1.5
+  color: MyString
+  is_path: false
+  user: two
+  template_data: 

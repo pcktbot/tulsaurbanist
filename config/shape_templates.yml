@@ -1,0 +1,163 @@
+residential:
+  single_family:
+    name: "Single Family Home"
+    category: "residential"
+    width: 15
+    depth: 12
+    color: "#FFD700"
+    height: 5
+  townhome:
+    name: "Townhome"
+    category: "residential"
+    width: 8
+    depth: 20
+    color: "#FFA500"
+    height: 8
+  apartment_4story:
+    name: "4-Story Apartment"
+    category: "residential"
+    width: 30
+    depth: 25
+    color: "#FF6347"
+    height: 15
+  apartment_8story:
+    name: "8-Story Apartment"
+    category: "residential"
+    width: 40
+    depth: 35
+    color: "#DC143C"
+    height: 30
+  duplex:
+    name: "Duplex"
+    category: "residential"
+    width: 20
+    depth: 15
+    color: "#FFB347"
+    height: 6
+
+commercial:
+  retail_small:
+    name: "Small Retail"
+    category: "commercial"
+    width: 20
+    depth: 15
+    color: "#4169E1"
+    height: 4
+  retail_large:
+    name: "Large Retail"
+    category: "commercial"
+    width: 50
+    depth: 40
+    color: "#1E90FF"
+    height: 8
+  mixed_use:
+    name: "Mixed Use Building"
+    category: "commercial"
+    width: 25
+    depth: 30
+    color: "#6A5ACD"
+    height: 20
+  office:
+    name: "Office Building"
+    category: "commercial"
+    width: 35
+    depth: 30
+    color: "#4682B4"
+    height: 25
+  restaurant:
+    name: "Restaurant"
+    category: "commercial"
+    width: 15
+    depth: 18
+    color: "#5F9EA0"
+    height: 4
+
+parks:
+  pocket_park:
+    name: "Pocket Park"
+    category: "parks"
+    width: 20
+    depth: 20
+    color: "#228B22"
+  plaza:
+    name: "Plaza"
+    category: "parks"
+    width: 40
+    depth: 40
+    color: "#32CD32"
+  green_space:
+    name: "Green Space"
+    category: "parks"
+    width: 60
+    depth: 50
+    color: "#2E8B57"
+  playground:
+    name: "Playground"
+    category: "parks"
+    width: 25
+    depth: 25
+    color: "#3CB371"
+
+infrastructure:
+  bike_lane:
+    name: "Bike Lane"
+    category: "infrastructure"
+    width: 2
+    is_path: true
+    color: "#00CED1"
+    height: 0
+  sidewalk:
+    name: "Sidewalk"
+    category: "infrastructure"
+    width: 2.5
+    is_path: true
+    color: "#A9A9A9"
+    height: 0
+  parking_lot:
+    name: "Parking Lot"
+    category: "infrastructure"
+    width: 30
+    depth: 40
+    color: "#808080"
+    height: 0
+  transit_stop:
+    name: "Transit Stop"
+    category: "infrastructure"
+    width: 5
+    depth: 3
+    color: "#FF8C00"
+    height: 3
+
+roads:
+  street_2lane:
+    name: "2-Lane Street"
+    category: "roads"
+    width: 7
+    is_path: true
+    lane_count: 2
+    color: "#696969"
+    height: 0
+  street_4lane:
+    name: "4-Lane Street"
+    category: "roads"
+    width: 14
+    is_path: true
+    lane_count: 4
+    color: "#696969"
+    height: 0
+  avenue_4lane:
+    name: "4-Lane Avenue"
+    category: "roads"
+    width: 14
+    is_path: true
+    lane_count: 4
+    color: "#556B2F"
+    height: 0
+  avenue_6lane:
+    name: "6-Lane Avenue"
+    category: "roads"
+    width: 21
+    is_path: true
+    lane_count: 6
+    color: "#556B2F"
+    height: 0

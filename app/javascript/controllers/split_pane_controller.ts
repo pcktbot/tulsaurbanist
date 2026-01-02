@@ -53,9 +53,9 @@ export default class extends Controller {
     const currentPos = this.directionValue === "horizontal" ? event.clientX : event.clientY;
     const delta = currentPos - this.startPos;
 
-    const totalSize = this.directionValue === "horizontal" 
-      ? this.element.offsetWidth 
-      : this.element.offsetHeight;
+    const totalSize = this.directionValue === "horizontal"
+      ? (this.element as HTMLElement).offsetWidth
+      : (this.element as HTMLElement).offsetHeight;
 
     let newSize1 = this.startSizes[0] + delta;
     let newSize2 = this.startSizes[1] - delta;

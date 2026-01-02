@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'dashboard', to: 'dashboard#index'
-  
+
+  resources :redesigns
+
   resources :incidents do
     collection do
       get 'quick_new'
@@ -16,6 +19,14 @@ Rails.application.routes.draw do
       get 'incidents/geojson', to: 'incidents#geojson'
       get 'incidents/:id/geojson', to: 'incidents#show_geojson'
       get 'geocode', to: 'geocode#search'
+
+      resources :shape_templates, only: [:index]
+      resources :redesigns, only: [:index, :show, :create, :update, :destroy] do
+        member do
+          get :geojson
+        end
+        resources :placed_shapes, only: [:create, :update, :destroy]
+      end
     end
   end
   

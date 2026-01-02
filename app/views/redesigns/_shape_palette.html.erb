@@ -1,0 +1,14 @@
+<div class="shape-palette">
+  <h3><%= @redesign.name %></h3>
+  <p class="redesign-description"><%= @redesign.description %></p>
+
+  <div class="palette-categories" data-shape-palette-target="categories">
+    <p>Loading templates...</p>
+  </div>
+
+  <div class="selected-info" data-shape-palette-target="selectedInfo" style="display: none;">
+    <h4>Selected</h4>
+    <div data-shape-palette-target="selectedDetails"></div>
+    <button type="button" data-action="shape-palette#clearSelection">Clear Selection</button>
+  </div>
+</div>
