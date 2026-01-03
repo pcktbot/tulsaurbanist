@@ -170,6 +170,14 @@ Read operations (index, show) are publicly accessible.
 - `railway.toml` - Railway deployment configuration
 - `Procfile` - Process management (Foreman)
 
+## Style Guide
+
+### Color Palette
+
+![Color Palette](app/assets/images/pallette.svg)
+
+The application uses a custom color palette defined in the palette SVG. Reference this palette when adding new UI components or styling.
+
 ## Contributing
 
 When contributing to this project:
