@@ -61,3 +61,4 @@ body:not(.home-controller) .main {
 
 /* Resets */
 a { text-decoration: none; }
+a:visited, a:active { color: var(--black); }

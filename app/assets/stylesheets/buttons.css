@@ -5,9 +5,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25em;
-  padding: 0.5em 0.75em;
+  padding: 0.5em 1.75em;
 }
-
+.btn > svg {
+  transform: translateY(2px);
+}
 .btn:hover {}
 .btn-small {
   font-size: 0.8em !important;
@@ -19,10 +21,17 @@
   border: 1px solid var(--palegray);
   display: inline-flex;
   align-items: center;
+  border-radius: 10px;
 }
 
 .btn-group > *:not(:last-child) {
   border-right: 1px solid var(--palegray);
+}
+.btn-group > *:first-child {
+  border-radius: 10px 0 0 10px;
+}
+.btn-group > *:last-child {
+  border-radius: 0 10px 10px 0;
 }
 
 [data-lucide] {
