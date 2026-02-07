@@ -28,10 +28,15 @@ export default class extends Controller {
     mapboxgl.accessToken = accessToken
 
     const containerId = this.hasContainerTarget ? this.containerTarget.id : 'map'
+    const mapStyle = this.getMapStyle()
+    if (!mapStyle) {
+      console.error('please provide a style url for a saved mapbox style. set as MAPBOX_STYLE.')
+      return
+    }
 
     this.map = new mapboxgl.Map({
       container: containerId,
-      style: 'mapbox://styles/pcktbot/ck77pm7sb09if1inzw8p9uxft',
+      style: mapStyle,
       center: [-95.9928, 36.1540],
       zoom: 11
     })
@@ -67,6 +72,13 @@ export default class extends Controller {
       return metaTag.getAttribute('content') || ''
     }
     return ''
+  }
+
+  private getMapStyle(): string {
+    const metaTag = document.querySelector('meta[name="mapbox-style"]')
+    if (metaTag) {
+      return metaTag.getAttribute('content') || ''
+    }
   }
 
   private async loadIncidents() {

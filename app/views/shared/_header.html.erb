@@ -1,9 +1,11 @@
-<header class="header flex align-stretch">
+<header class="header px-2 flex align-stretch justify-between">
   <a class="home-link" href="/">TulsaUrbanist</a>
   <div class="links flex justify-evenly align-center">
     <%= yield %>
-    <% unless user_authenticated? %>
-      <button onclick="window.location.href='<%= new_incident_path %>'" class="link login-link" type="button">Login</button>
+    <% if user_authenticated? %>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'link' %>
+    <% else %>
+      <%= link_to 'Login', new_user_session_path, class: 'link login-link' %>
     <% end %>
   </div>
 </header>

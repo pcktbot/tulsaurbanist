@@ -1,16 +1,18 @@
 <% content_for :head do %>
   <link href='https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css' rel='stylesheet' />
   <meta name="mapbox-token" content="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>">
+  <meta name="mapbox-style" content="<%= ENV['MAPBOX_STYLE'] %>">
 <% end %>
 
-<div class="">
+<div class="incident-form-layout">
   <%= render 'shared/header' do %>
     <%= link_to 'Show', @incident, class: 'link' %>
     <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
   <% end %>
 
-  <div class="flex justify-center align-center w-100 flex-column">
-    <h1>Edit Incident</h1>
-    <%= render 'form', incident: @incident %>
+  <div class="incident-form-grid incident-form-grid--single">
+    <div class="incident-form-column">
+      <%= render 'form', incident: @incident %>
+    </div>
   </div>
 </div>

@@ -1,22 +1,23 @@
 <% content_for :head do %>
   <link href='https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css' rel='stylesheet' />
   <meta name="mapbox-token" content="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>">
+  <meta name="mapbox-style" content="<%= ENV['MAPBOX_STYLE'] %>">
 <% end %>
 
 <% has_article = @article_text.present? %>
-<div class="scrape-layout">
+<div class="incident-form-layout">
   <%= render 'shared/header' do %>
     <%= link_to 'Scrape From Article', scrape_new_incidents_path, class: 'link' %>
     <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
   <% end %>
 
-  <div class="scrape-grid <%= 'scrape-grid--single' unless has_article %>">
-    <div class="scrape-column">
+  <div class="incident-form-grid <%= 'incident-form-grid--single' unless has_article %>">
+    <div class="incident-form-column">
       <%= render 'form', incident: @incident %>
     </div>
     <% if has_article %>
-      <div class="scrape-column">
-        <div class="bg-tertiary">
+      <div class="incident-form-column incident-form-column--article">
+        <div class="article-panel">
           <h2>Article Text</h2>
           <div class="article-text"><%= @article_text %></div>
         </div>

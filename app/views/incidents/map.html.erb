@@ -1,6 +1,7 @@
 <% content_for :head do %>
   <link href='https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css' rel='stylesheet' />
   <meta name="mapbox-token" content="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>">
+  <meta name="mapbox-style" content="<%= ENV['MAPBOX_STYLE'] %>">
 <% end %>
 
 <div class="">

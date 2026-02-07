@@ -13,12 +13,25 @@
  *= require_tree .
  *= require_self
  */
+:root {
+  --primary-color: #b73032;
+  --secondary-color: #152645;
+  --tertiary-color: #e2b142;
+  --quaternary-color: #9DC4B5;
+  --quinary-color: #f7f2e3;
+  --black: #303030;
+  --lightgray: #6D6A75;
+  --palegray: #CDDDDD;
+  --white: #FEFCFD;
+  --block-font: "Bowlby One", sans-serif;
+  --heading-font: "Montserrat", sans-serif;
+  --body-font: "Merriweather Sans", sans-serif;
+}
 
 *,*::before,*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* border: 1px solid red; */
 }
 
  body {
@@ -26,6 +39,20 @@
   justify-content: center;
   align-items: stretch;
   min-height: 100dvh;
+  font-family: var(--body-font);
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1.title {
+  font-family: var(--block-font);
+}
+
+.header, header, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.5rem;
 }
 
 body.home-controller {
@@ -61,4 +88,10 @@ body:not(.home-controller) .main {
 
 /* Resets */
 a { text-decoration: none; }
-a:visited, a:active { color: var(--black); }
+form, button {
+  background: none;
+  outline: none;
+  border: none;
+  font-size: 1em;
+}
+a, a:visited, a:active { color: var(--black); }

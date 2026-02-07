@@ -8,7 +8,7 @@
         <%= link_to 'Quick Entry', quick_new_incidents_path, class: 'btn btn-primary', data: { turbo_frame: 'form-content' } %>
       </div>
     <% else %>
-      <p><button onclick="window.location.href='<%= quick_new_incidents_path %>'" class="link" type="button">Login</button> to create incidents</p>
+      <p><%= link_to 'Login', new_user_session_path, class: 'link' %> to create incidents</p>
     <% end %>
   </div>
 </div>

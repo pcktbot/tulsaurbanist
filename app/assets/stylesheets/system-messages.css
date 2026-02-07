@@ -1,0 +1,12 @@
+.flash-messages {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.notice {
+  background-color: var(--quaternary-color);
+  color: var(--white);
+  padding: 1.5em;
+}

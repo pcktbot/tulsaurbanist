@@ -10,7 +10,7 @@
 
 
 <div class="incidents-container">
-  <div class="incidents-header">
+  <div class="flex incidents-header">
     <div class="incident-col date-col">Date</div>
     <div class="incident-col location-col">Location</div>
     <div class="incident-col description-col">Description</div>
@@ -19,13 +19,13 @@
   </div>
   <div class="incidents-list">
     <% @incidents.each do |incident| %>
-      <div class="incident-row">
+      <div class="flex incident-row">
         <div class="incident-col date-col"><%= incident.date_time.strftime("%B %d, %Y") %></div>
         <div class="incident-col location-col"><%= incident.location_description %></div>
         <div class="incident-col description-col"><%= incident.brief_description %></div>
         <div class="incident-col fatalities-col"><%= incident.fatality_count %></div>
         <div class="incident-col actions-col">
-          <div class="action-group">
+          <div class="action-group flex flex-column">
             <div class="action-item">
               <%= link_to 'Show', incident, class: 'action' %>
             </div>

@@ -1,23 +1,24 @@
-<div class="">
+<div class="scrape-page">
   <%= render 'shared/header' do %>
     <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
   <% end %>
   
+  <div class="scrape-form-container">
+    <% if @scrape_error.present? %>
+      <div class="error-messages">
+        <p><%= @scrape_error %></p>
+      </div>
+    <% end %>
 
-  <% if @scrape_error.present? %>
-    <div class="error-messages">
-      <p><%= @scrape_error %></p>
-    </div>
-  <% end %>
+    <%= form_with url: scrape_create_incidents_path, local: true, data: { turbo: false } do |form| %>
+      <div class="field">
+        <%= form.label :article_url, "Article URL" %>
+        <%= form.text_field :article_url, placeholder: "https://...", required: true %>
+      </div>
 
-  <%= form_with url: scrape_create_incidents_path, local: true, data: { turbo: false } do |form| %>
-    <div class="field">
-      <%= form.label :article_url, "Article URL" %>
-      <%= form.text_field :article_url, placeholder: "https://...", required: true %>
-    </div>
-
-    <div class="actions control">
-      <%= form.submit "Scrape Article" %>
-    </div>
-  <% end %>
+      <div class="actions control">
+        <%= form.submit "Scrape Article" %>
+      </div>
+    <% end %>
+  </div>
 </div>

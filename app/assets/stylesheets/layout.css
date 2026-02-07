@@ -3,36 +3,20 @@
 .justify-center { justify-content: center; }
 .justify-start { justify-content: flex-start; }
 .justify-evenly { justify-content: space-evenly; }
+.justify-between { justify-content: space-between; }
 .align-center { align-items: center; }
 .align-baseline { align-items: baseline; }
 .align-stretch { align-items: stretch; }
 
 .p-4 { padding: 1rem; }
+.p-2 { padding: 0.5rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-1 { padding-left: 0.25rem; padding-right: 0.25rem; }
+
+.mt-4 { margin-top: 1rem; }
 .w-100 { width: 100%; }
+.h-100 { height: 100%; }
 
 .grid { display: grid; }
 .c-2 { grid-template-columns: repeat(2); }
-
-
-.scrape-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
-}
-
-.scrape-grid--single {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.scrape-column {
-  min-width: 0;
-  padding: 1.5rem;
-}
-
-.flash-messages {
-  position: fixed;
-  top: 50px;
-  left: 50%;
-  transform: translate(0, -50%);
-  z-index: 11;
-}
