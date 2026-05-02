@@ -53,13 +53,14 @@ class IncidentsController < ApplicationController
       return render :scrape_new
     end
 
-    attributes = IncidentArticleScraper.scrape(url)
-    @article_text = attributes.delete(:article_text)
+    scraped = IncidentArticleScraper.scrape(url)
+    attributes = IncidentAiExtractor.extract(scraped[:article_text], publication_date: scraped[:publication_date])
+    attributes[:information_source] = scraped[:information_source]
+    @article_text = scraped[:article_text]
     @incident = Incident.new(attributes)
-    @incident.information_source ||= "News Article"
 
     render :new
-  rescue IncidentArticleScraper::ScrapeError => e
+  rescue IncidentArticleScraper::ScrapeError, IncidentAiExtractor::ExtractionError => e
     @scrape_error = e.message
     render :scrape_new
   end

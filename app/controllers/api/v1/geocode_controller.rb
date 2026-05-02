@@ -9,6 +9,8 @@ class Api::V1::GeocodeController < ApplicationController
       return render json: { error: 'Query parameter is required' }, status: :bad_request
     end
 
+    query = normalize_intersection(query)
+
     unless query.match?(/tulsa|oklahoma|ok/i)
       query = "#{query}, Tulsa, OK"
     end
@@ -16,7 +18,7 @@ class Api::V1::GeocodeController < ApplicationController
     begin
       token = ENV['MAPBOX_ACCESS_TOKEN']
       encoded_query = URI.encode_www_form_component(query)
-      url = "https://api.mapbox.com/geocoding/v5/mapbox.places/#{encoded_query}.json?access_token=#{token}&proximity=-95.9928,36.1540&limit=5"
+      url = "https://api.mapbox.com/geocoding/v5/mapbox.places/#{encoded_query}.json?access_token=#{token}&proximity=-95.9928,36.1540&types=address&limit=5"
 
       uri = URI(url)
       http = Net::HTTP.new(uri.host, uri.port)
@@ -40,5 +42,11 @@ class Api::V1::GeocodeController < ApplicationController
       Rails.logger.error("Geocoding error: #{e.message}")
       render json: { error: 'Geocoding service unavailable' }, status: :service_unavailable
     end
+  end
+
+  private
+
+  def normalize_intersection(query)
+    query.gsub(/\s+(?:and|at|@)\s+/i, ' & ')
   end
 end

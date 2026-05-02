@@ -4,19 +4,6 @@ require "nokogiri"
 class IncidentArticleScraper
   class ScrapeError < StandardError; end
 
-  WORD_NUMBER_MAP = {
-    "one" => 1,
-    "two" => 2,
-    "three" => 3,
-    "four" => 4,
-    "five" => 5,
-    "six" => 6,
-    "seven" => 7,
-    "eight" => 8,
-    "nine" => 9,
-    "ten" => 10
-  }.freeze
-
   def self.scrape(url)
     new(url).scrape
   end
@@ -31,12 +18,9 @@ class IncidentArticleScraper
     article_text = extract_article_text(doc)
 
     {
-      date_time: parse_time(metadata[:date]) || Time.current,
-      location_description: extract_location(article_text),
-      fatality_count: extract_fatalities(article_text),
-      brief_description: metadata[:description] || extract_summary(article_text),
-      information_source: @url,
-      article_text: article_text
+      article_text: article_text,
+      publication_date: parse_time(metadata[:date]),
+      information_source: @url
     }
   rescue OpenURI::HTTPError, SocketError, URI::InvalidURIError => e
     raise ScrapeError, "Unable to fetch article: #{e.message}"
@@ -51,10 +35,7 @@ class IncidentArticleScraper
   def extract_metadata(doc)
     json_ld = extract_json_ld(doc)
     {
-      title: json_ld[:headline] || meta_content(doc, "property", "og:title"),
-      description: json_ld[:description] || meta_content(doc, "name", "description") || meta_content(doc, "property", "og:description"),
-      date: json_ld[:date_published] || meta_content(doc, "property", "article:published_time"),
-      source: json_ld[:publisher] || meta_content(doc, "property", "og:site_name")
+      date: json_ld[:date_published] || meta_content(doc, "property", "article:published_time")
     }
   end
 
@@ -74,12 +55,7 @@ class IncidentArticleScraper
 
     return {} unless article
 
-    {
-      headline: article["headline"],
-      description: article["description"],
-      date_published: article["datePublished"],
-      publisher: article.dig("publisher", "name")
-    }
+    { date_published: article["datePublished"] }
   end
 
   def extract_article_text(doc)
@@ -100,33 +76,6 @@ class IncidentArticleScraper
     end
 
     doc.css("p").map { |p| p.text.squish }.join(" ")
-  end
-
-  def extract_fatalities(text)
-    return 0 if text.blank?
-
-    numeric_match = text.match(/\b(\d+)\b[^.]{0,80}\b(killed|dead|dies|died)\b/i)
-    return numeric_match[1].to_i if numeric_match
-
-    word_match = text.match(/\b(one|two|three|four|five|six|seven|eight|nine|ten)\b[^.]{0,80}\b(killed|dead|dies|died)\b/i)
-    return WORD_NUMBER_MAP[word_match[1].downcase] if word_match
-
-    0
-  end
-
-  def extract_location(text)
-    return nil if text.blank?
-
-    sentence = text.split(/[.!?]/).find { |line| line.match?(/\b(at|near|on|along|in)\b/i) }
-    return nil unless sentence
-
-    sentence.strip
-  end
-
-  def extract_summary(text)
-    return nil if text.blank?
-
-    text.strip[0, 300]
   end
 
   def scrub_article_node(node)
@@ -152,11 +101,5 @@ class IncidentArticleScraper
 
   def meta_content(doc, attr_key, attr_value)
     doc.at("meta[#{attr_key}='#{attr_value}']")&.[]("content")
-  end
-
-  def source_from_url
-    URI.parse(@url).host
-  rescue URI::InvalidURIError
-    nil
   end
 end
