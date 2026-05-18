@@ -3,6 +3,4 @@ class AdditionalInformation < ApplicationRecord
   
   validates :incident_id, presence: true
   
-  serialize :vehicle_types, Array
-  serialize :contributing_factors, Array
 end

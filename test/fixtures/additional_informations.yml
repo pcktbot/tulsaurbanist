@@ -1,15 +1,9 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
   incident: one
-  vehicle_types: MyText
-  contributing_factors: MyText
   road_conditions: MyString
   notes: MyText
 
 two:
   incident: two
-  vehicle_types: MyText
-  contributing_factors: MyText
   road_conditions: MyString
   notes: MyText

@@ -15,7 +15,29 @@
     <%= form.datetime_local_field :date_time, required: true %>
   </div>
 
-  <%= render 'shared/location_lookup', form: form, show_map: true %>
+  <div class="field">
+    <%= form.label :location_description, "Cross Streets / Address" %>
+    <%= form.text_field :location_description,
+        data: { "incident-form-target": "locationField" },
+        placeholder: "e.g., 51st and Yale" %>
+  </div>
+
+  <div class="coordinates">
+    <div class="field">
+      <%= form.label :latitude %>
+      <%= form.text_field :latitude,
+          id: "incident_latitude",
+          readonly: true,
+          data: { "incident-form-target": "latField" } %>
+    </div>
+    <div class="field">
+      <%= form.label :longitude %>
+      <%= form.text_field :longitude,
+          id: "incident_longitude",
+          readonly: true,
+          data: { "incident-form-target": "lngField" } %>
+    </div>
+  </div>
 
   <div class="field">
     <%= form.label :brief_description, "Description" %>
@@ -73,7 +95,7 @@
 
   <div class="field">
     <%= form.label :source_id, "Source" %>
-    <%= form.collection_select :source_id, Source.all, :id, :name, { include_blank: true } %>
+    <%= form.collection_select :source_id, Source.all, :id, :source_name, { include_blank: true } %>
   </div>
 
   <div class="actions">

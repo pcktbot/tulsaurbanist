@@ -4,24 +4,42 @@
   <meta name="mapbox-style" content="<%= ENV['MAPBOX_STYLE'] %>">
 <% end %>
 
-<% has_article = @article_text.present? %>
-<div class="incident-form-layout">
+<div class="incident-form-layout"
+     data-controller="incident-form"
+     data-action="geocode-lookup:coordinatesSelected->incident-form#handleSearchSelection map:markerMoved->incident-form#handleMarkerMoved">
   <%= render 'shared/header' do %>
     <%= link_to 'Scrape From Article', scrape_new_incidents_path, class: 'link' %>
     <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
   <% end %>
 
-  <div class="incident-form-grid <%= 'incident-form-grid--single' unless has_article %>">
-    <div class="incident-form-column">
-      <%= render 'form', incident: @incident %>
-    </div>
-    <% if has_article %>
-      <div class="incident-form-column incident-form-column--article">
+  <div class="incident-form-grid">
+    <div class="incident-form-column incident-form-column--left">
+      <% if @article_text.present? %>
         <div class="article-panel">
           <h2>Article Text</h2>
           <div class="article-text"><%= @article_text %></div>
         </div>
+      <% end %>
+      <%= render 'form', incident: @incident %>
+    </div>
+
+    <div class="incident-form-column incident-form-column--map">
+      <div class="incident-map-container"
+           data-controller="map geocode-lookup"
+           data-map-interactive-value="true">
+        <div class="map-search-overlay">
+          <input type="text"
+                 class="map-search-input"
+                 placeholder="Search location..."
+                 data-geocode-lookup-target="input"
+                 data-action="input->geocode-lookup#search"
+                 autocomplete="off" />
+          <div class="map-search-results hidden" data-geocode-lookup-target="results"></div>
+        </div>
+        <div id="incident-location-map"
+             data-map-target="container"
+             class="map-fullscreen"></div>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>
