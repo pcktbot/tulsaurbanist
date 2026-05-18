@@ -13,8 +13,10 @@ export default class extends Controller {
   }
 
   declare readonly inputTarget: HTMLInputElement
-  declare readonly latitudeFieldTarget: HTMLInputElement
-  declare readonly longitudeFieldTarget: HTMLInputElement
+  declare readonly hasLatitudeFieldTarget: boolean
+  declare readonly hasLongitudeFieldTarget: boolean
+  declare readonly latitudeFieldTarget?: HTMLInputElement
+  declare readonly longitudeFieldTarget?: HTMLInputElement
   declare readonly resultsTarget: HTMLElement
   declare readonly hasResultsTarget: boolean
   declare readonly hasDisplayNameTarget: boolean
@@ -34,11 +36,12 @@ export default class extends Controller {
   }
 
   private loadExistingCoordinates() {
+    if (!this.hasLatitudeFieldTarget || !this.hasLongitudeFieldTarget) return
+
     setTimeout(() => {
-      if (this.latitudeFieldTarget && this.longitudeFieldTarget &&
-          this.latitudeFieldTarget.value && this.longitudeFieldTarget.value) {
-        const lat = parseFloat(this.latitudeFieldTarget.value)
-        const lng = parseFloat(this.longitudeFieldTarget.value)
+      if (this.latitudeFieldTarget!.value && this.longitudeFieldTarget!.value) {
+        const lat = parseFloat(this.latitudeFieldTarget!.value)
+        const lng = parseFloat(this.longitudeFieldTarget!.value)
 
         if (!isNaN(lat) && !isNaN(lng)) {
           this.dispatch("coordinatesSelected", {
@@ -122,18 +125,24 @@ export default class extends Controller {
   }
 
   setCoordinates(lat: number, lng: number, displayName?: string) {
-    const currentLat = parseFloat(this.latitudeFieldTarget.value)
-    const currentLng = parseFloat(this.longitudeFieldTarget.value)
-
-    this.latitudeFieldTarget.value = lat.toString()
-    this.longitudeFieldTarget.value = lng.toString()
-
     if (displayName && this.hasDisplayNameTarget && this.displayNameTarget) {
       this.displayNameTarget.textContent = `Selected: ${displayName}`
       this.displayNameTarget.classList.remove('hidden')
     }
 
-    if (currentLat !== lat || currentLng !== lng) {
+    if (this.hasLatitudeFieldTarget && this.hasLongitudeFieldTarget) {
+      const currentLat = parseFloat(this.latitudeFieldTarget!.value)
+      const currentLng = parseFloat(this.longitudeFieldTarget!.value)
+
+      this.latitudeFieldTarget!.value = lat.toString()
+      this.longitudeFieldTarget!.value = lng.toString()
+
+      if (currentLat !== lat || currentLng !== lng) {
+        this.dispatch("coordinatesSelected", {
+          detail: { latitude: lat, longitude: lng, displayName }
+        })
+      }
+    } else {
       this.dispatch("coordinatesSelected", {
         detail: { latitude: lat, longitude: lng, displayName }
       })
@@ -141,8 +150,10 @@ export default class extends Controller {
   }
 
   updateMapFromFields() {
-    const lat = parseFloat(this.latitudeFieldTarget.value)
-    const lng = parseFloat(this.longitudeFieldTarget.value)
+    if (!this.hasLatitudeFieldTarget || !this.hasLongitudeFieldTarget) return
+
+    const lat = parseFloat(this.latitudeFieldTarget!.value)
+    const lng = parseFloat(this.longitudeFieldTarget!.value)
 
     if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
       this.dispatch("coordinatesSelected", {

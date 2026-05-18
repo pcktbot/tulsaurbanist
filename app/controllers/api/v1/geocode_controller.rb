@@ -18,7 +18,7 @@ class Api::V1::GeocodeController < ApplicationController
     begin
       token = ENV['MAPBOX_ACCESS_TOKEN']
       encoded_query = URI.encode_www_form_component(query)
-      url = "https://api.mapbox.com/geocoding/v5/mapbox.places/#{encoded_query}.json?access_token=#{token}&proximity=-95.9928,36.1540&types=address&limit=5"
+      url = "https://api.mapbox.com/geocoding/v5/mapbox.places/#{encoded_query}.json?access_token=#{token}&proximity=-95.9928,36.1540&types=address,intersection&limit=5"
 
       uri = URI(url)
       http = Net::HTTP.new(uri.host, uri.port)
