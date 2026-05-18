@@ -4,15 +4,36 @@
   <meta name="mapbox-style" content="<%= ENV['MAPBOX_STYLE'] %>">
 <% end %>
 
-<div class="incident-form-layout">
+<div class="incident-form-layout"
+     data-controller="incident-form"
+     data-action="geocode-lookup:coordinatesSelected->incident-form#handleSearchSelection map:markerMoved->incident-form#handleMarkerMoved">
   <%= render 'shared/header' do %>
     <%= link_to 'Show', @incident, class: 'link' %>
     <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
   <% end %>
 
-  <div class="incident-form-grid incident-form-grid--single">
-    <div class="incident-form-column">
+  <div class="incident-form-grid">
+    <div class="incident-form-column incident-form-column--left">
       <%= render 'form', incident: @incident %>
+    </div>
+
+    <div class="incident-form-column incident-form-column--map">
+      <div class="incident-map-container"
+           data-controller="map geocode-lookup"
+           data-map-interactive-value="true">
+        <div class="map-search-overlay">
+          <input type="text"
+                 class="map-search-input"
+                 placeholder="Search location..."
+                 data-geocode-lookup-target="input"
+                 data-action="input->geocode-lookup#search"
+                 autocomplete="off" />
+          <div class="map-search-results hidden" data-geocode-lookup-target="results"></div>
+        </div>
+        <div id="incident-location-map"
+             data-map-target="container"
+             class="map-fullscreen"></div>
+      </div>
     </div>
   </div>
 </div>

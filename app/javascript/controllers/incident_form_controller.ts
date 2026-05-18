@@ -18,7 +18,7 @@ export default class extends Controller {
   handleMarkerMoved(event: Event) {
     const customEvent = event as CustomEvent
     const { latitude, longitude } = customEvent.detail
-    this.latFieldTarget.value = parseFloat(latitude).toFixed(2)
-    this.lngFieldTarget.value = parseFloat(longitude).toFixed(2)
+    this.latFieldTarget.value = parseFloat(latitude).toFixed(6)
+    this.lngFieldTarget.value = parseFloat(longitude).toFixed(6)
   }
 }
