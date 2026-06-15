@@ -1,0 +1,82 @@
+<h2>How should the road disruption zone look?</h2>
+<p class="subtitle">The area beneath a placed road — communicating "this space has been reworked"</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="frosted" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#2a3a2a;padding:0;overflow:hidden;position:relative;height:160px">
+      <!-- Simulated map background -->
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#3a4a3a 25%,#2e3e2e 25%,#2e3e2e 50%,#3a4a3a 50%,#3a4a3a 75%,#2e3e2e 75%);background-size:20px 20px;opacity:0.6"></div>
+      <div style="position:absolute;left:15%;top:30%;width:12%;height:40%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:30%;top:20%;width:10%;height:30%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:55%;top:35%;width:14%;height:35%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:72%;top:25%;width:11%;height:40%;background:#4a5a3a;border-radius:2px"></div>
+      <!-- Frosted band across middle -->
+      <div style="position:absolute;left:0;right:0;top:38%;height:24%;backdrop-filter:blur(8px);background:rgba(200,190,160,0.35);border-top:1px solid rgba(255,255,255,0.2);border-bottom:1px solid rgba(255,255,255,0.2)"></div>
+      <!-- Road line on top -->
+      <div style="position:absolute;left:0;right:0;top:47%;height:6%;background:#c8b98a;border-radius:1px"></div>
+    </div>
+    <div class="card-body">
+      <h3>Frosted Glass</h3>
+      <p>A blur + light wash over the map tiles. Clean, architectural feel.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="hatch" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#2a3a2a;padding:0;overflow:hidden;position:relative;height:160px">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#3a4a3a 25%,#2e3e2e 25%,#2e3e2e 50%,#3a4a3a 50%,#3a4a3a 75%,#2e3e2e 75%);background-size:20px 20px;opacity:0.6"></div>
+      <div style="position:absolute;left:15%;top:30%;width:12%;height:40%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:30%;top:20%;width:10%;height:30%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:55%;top:35%;width:14%;height:35%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:72%;top:25%;width:11%;height:40%;background:#4a5a3a;border-radius:2px"></div>
+      <!-- Hatched overlay band -->
+      <div style="position:absolute;left:0;right:0;top:35%;height:30%;background:repeating-linear-gradient(45deg,rgba(255,200,100,0.15),rgba(255,200,100,0.15) 3px,transparent 3px,transparent 12px);border-top:1px solid rgba(255,200,100,0.4);border-bottom:1px solid rgba(255,200,100,0.4)"></div>
+      <!-- Road line on top -->
+      <div style="position:absolute;left:0;right:0;top:47%;height:6%;background:#c8b98a;border-radius:1px"></div>
+    </div>
+    <div class="card-body">
+      <h3>Construction Hatch</h3>
+      <p>Diagonal stripe pattern — communicates active demolition / work zone.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dark-vignette" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#2a3a2a;padding:0;overflow:hidden;position:relative;height:160px">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#3a4a3a 25%,#2e3e2e 25%,#2e3e2e 50%,#3a4a3a 50%,#3a4a3a 75%,#2e3e2e 75%);background-size:20px 20px;opacity:0.6"></div>
+      <div style="position:absolute;left:15%;top:30%;width:12%;height:40%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:30%;top:20%;width:10%;height:30%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:55%;top:35%;width:14%;height:35%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:72%;top:25%;width:11%;height:40%;background:#4a5a3a;border-radius:2px"></div>
+      <!-- Dark desaturated band -->
+      <div style="position:absolute;left:0;right:0;top:35%;height:30%;background:rgba(0,0,0,0.55);filter:blur(0px)"></div>
+      <div style="position:absolute;left:0;right:0;top:33%;height:4%;background:linear-gradient(to bottom,transparent,rgba(0,0,0,0.55))"></div>
+      <div style="position:absolute;left:0;right:0;top:65%;height:4%;background:linear-gradient(to top,transparent,rgba(0,0,0,0.55))"></div>
+      <!-- Road line on top -->
+      <div style="position:absolute;left:0;right:0;top:47%;height:6%;background:#c8b98a;border-radius:1px"></div>
+    </div>
+    <div class="card-body">
+      <h3>Dark Shadow</h3>
+      <p>Map dims beneath the road zone. Understated, keeps road prominent.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="desaturate" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#2a3a2a;padding:0;overflow:hidden;position:relative;height:160px">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#3a4a3a 25%,#2e3e2e 25%,#2e3e2e 50%,#3a4a3a 50%,#3a4a3a 75%,#2e3e2e 75%);background-size:20px 20px;opacity:0.6"></div>
+      <div style="position:absolute;left:15%;top:30%;width:12%;height:40%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:30%;top:20%;width:10%;height:30%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:55%;top:35%;width:14%;height:35%;background:#4a5a3a;border-radius:2px"></div>
+      <div style="position:absolute;left:72%;top:25%;width:11%;height:40%;background:#4a5a3a;border-radius:2px"></div>
+      <!-- Washed-out / desaturated overlay -->
+      <div style="position:absolute;left:0;right:0;top:35%;height:30%;background:rgba(220,210,180,0.5);mix-blend-mode:color;filter:saturate(0)"></div>
+      <div style="position:absolute;left:0;right:0;top:35%;height:30%;background:rgba(240,230,200,0.3)"></div>
+      <!-- Road line on top -->
+      <div style="position:absolute;left:0;right:0;top:47%;height:6%;background:#c8b98a;border-radius:1px"></div>
+    </div>
+    <div class="card-body">
+      <h3>Bleached / Washed Out</h3>
+      <p>Map fades to near-white in the disruption zone. Feels like cleared land.</p>
+    </div>
+  </div>
+
+</div>
