@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_06_15_000001) do
+ActiveRecord::Schema[7.0].define(version: 2026_06_16_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,9 +50,12 @@ ActiveRecord::Schema[7.0].define(version: 2026_06_15_000001) do
 
   create_table "parking_lots", force: :cascade do |t|
     t.jsonb "coordinates", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source"
+    t.string "external_id"
+    t.index ["source", "external_id"], name: "index_parking_lots_on_source_and_external_id", unique: true, where: "(source IS NOT NULL)"
     t.index ["user_id"], name: "index_parking_lots_on_user_id"
   end
 
