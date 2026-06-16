@@ -71,7 +71,7 @@ export default class extends Controller {
       source: "parking-lots",
       paint: {
         "fill-color": "#F59E0B",
-        "fill-opacity": 0.85
+        "fill-opacity": 1
       }
     })
 
@@ -80,7 +80,7 @@ export default class extends Controller {
       type: "line",
       source: "parking-lots",
       paint: {
-        "line-color": "#D97706",
+        "line-color": "#F59E0B",
         "line-width": 1
       }
     })
