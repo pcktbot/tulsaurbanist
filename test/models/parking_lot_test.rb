@@ -16,9 +16,9 @@ class ParkingLotTest < ActiveSupport::TestCase
     assert_not @lot.valid?
   end
 
-  test "invalid without user" do
+  test "valid without user" do
     @lot.user = nil
-    assert_not @lot.valid?
+    assert @lot.valid?
   end
 
   test "to_geojson_feature returns a valid GeoJSON Feature" do

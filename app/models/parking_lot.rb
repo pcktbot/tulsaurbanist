@@ -1,5 +1,5 @@
 class ParkingLot < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
 
   validates :coordinates, presence: true
 
