@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_12_31_160922) do
+ActiveRecord::Schema[7.0].define(version: 2026_06_16_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,17 @@ ActiveRecord::Schema[7.0].define(version: 2025_12_31_160922) do
     t.index ["date_time"], name: "index_incidents_on_date_time"
     t.index ["latitude", "longitude"], name: "index_incidents_on_latitude_and_longitude"
     t.index ["source_id"], name: "index_incidents_on_source_id"
+  end
+
+  create_table "parking_lots", force: :cascade do |t|
+    t.jsonb "coordinates", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "source"
+    t.string "external_id"
+    t.index ["source", "external_id"], name: "index_parking_lots_on_source_and_external_id", unique: true, where: "(source IS NOT NULL)"
+    t.index ["user_id"], name: "index_parking_lots_on_user_id"
   end
 
   create_table "placed_shapes", force: :cascade do |t|
@@ -131,6 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_12_31_160922) do
 
   add_foreign_key "additional_informations", "incidents"
   add_foreign_key "incidents", "sources"
+  add_foreign_key "parking_lots", "users"
   add_foreign_key "placed_shapes", "redesigns"
   add_foreign_key "placed_shapes", "shape_templates"
   add_foreign_key "redesigns", "users"

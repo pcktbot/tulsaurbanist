@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   get 'dashboard', to: 'dashboard#index'
+  get 'parking', to: 'parking_lots#index'
+  get 'parking/edit', to: 'parking_lots#edit'
 
   resources :redesigns
 
@@ -19,6 +21,8 @@ Rails.application.routes.draw do
       get 'incidents/geojson', to: 'incidents#geojson'
       get 'incidents/:id/geojson', to: 'incidents#show_geojson'
       get 'geocode', to: 'geocode#search'
+      get 'parking_lots/geojson', to: 'parking_lots#geojson'
+      resources :parking_lots, only: [:create, :update, :destroy]
 
       resources :shape_templates, only: [:index]
       resources :redesigns, only: [:index, :show, :create, :update, :destroy] do
