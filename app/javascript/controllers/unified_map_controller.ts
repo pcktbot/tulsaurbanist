@@ -9,7 +9,17 @@ interface LensConfig {
   defaultVisible: boolean
 }
 
+const VALUE_RAMP: [number, string][] = [
+  [0,      "#16223a"],
+  [50000,  "#2f4258"],
+  [100000, "#5b677c"],
+  [200000, "#9dc4b5"],
+  [400000, "#e2b142"],
+  [630000, "#f4d27a"],
+]
+
 const LENSES: LensConfig[] = [
+  { id: "value_per_acre", label: "Value per acre", color: "#e2b142", layers: ["vpa-fill", "vpa-dead-zone-outline"], defaultVisible: true },
   { id: "fatalities", label: "Fatalities", color: "#b73032", layers: ["fatalities-glow", "fatalities-points"], defaultVisible: true },
   { id: "parking", label: "Surface parking", color: "#5b677c", layers: ["parking-fill", "parking-outline"], defaultVisible: true },
   { id: "redesigns", label: "Redesigns", color: "#e2b142", layers: [], defaultVisible: false },
@@ -44,6 +54,7 @@ export default class extends Controller {
 
     this.map.on("load", () => {
       this.addBaseMap()
+      this.loadValuePerAcre()
       this.loadFatalities()
       this.loadParkingLots()
     })
@@ -152,6 +163,37 @@ export default class extends Controller {
     const url = new URL(window.location.href)
     url.searchParams.set("layers", Array.from(this.visibleLayers).join(","))
     window.history.replaceState({}, "", url.toString())
+  }
+
+  private async loadValuePerAcre() {
+    if (!this.map) return
+    const response = await fetch("/api/v1/parcels/value_per_acre.geojson")
+    const geojson = await response.json()
+    const visibility = this.visibleLayers.has("value_per_acre") ? "visible" : "none"
+
+    this.map.addSource("value-per-acre", { type: "geojson", data: geojson })
+
+    const stepExpr: any[] = ["step", ["get", "value_per_acre"]]
+    VALUE_RAMP.forEach(([threshold, color], i) => {
+      if (i === 0) { stepExpr.push(color) } else { stepExpr.push(threshold, color) }
+    })
+
+    this.map.addLayer({
+      id: "vpa-fill",
+      type: "fill",
+      source: "value-per-acre",
+      paint: { "fill-color": stepExpr as any, "fill-opacity": 0.85 },
+      layout: { visibility }
+    })
+
+    this.map.addLayer({
+      id: "vpa-dead-zone-outline",
+      type: "line",
+      source: "value-per-acre",
+      filter: ["==", ["get", "is_dead_zone"], true],
+      paint: { "line-color": "#b73032", "line-width": 1.5, "line-dasharray": [3, 2] },
+      layout: { visibility }
+    })
   }
 
   private async loadFatalities() {

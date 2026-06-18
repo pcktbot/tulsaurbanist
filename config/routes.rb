@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       resources :parking_lots, only: [:create, :update, :destroy]
 
       resources :shape_templates, only: [:index]
+      get 'parcels/value_per_acre', to: 'parcels#value_per_acre'
+
       resources :redesigns, only: [:index, :show, :create, :update, :destroy] do
         member do
           get :geojson
