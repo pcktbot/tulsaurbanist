@@ -47,6 +47,9 @@ const config = {
       directory: path.resolve(__dirname, 'public'),
       publicPath: '/packs/'
     },
+    devMiddleware: {
+      writeToDisk: true
+    },
     compress: true,
     port: 3035,
     hot: true,

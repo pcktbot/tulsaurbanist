@@ -1,0 +1,160 @@
+<% content_for :head do %>
+  <title>The Map — Tulsa Urbanist</title>
+  <meta name="description" content="Live map of Tulsa traffic fatalities, surface parking, and citizen redesigns. Toggle lenses to see each layer.">
+  <link href='https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css' rel='stylesheet' />
+  <meta name="mapbox-token" content="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>">
+  <meta name="mapbox-style" content="<%= ENV['MAPBOX_STYLE'] %>">
+  <style>
+    body.map-controller { overflow: hidden; }
+    .unified-map-wrap { position: relative; width: 100vw; height: 100vh; background: #0a1426; }
+    .unified-map-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .map-header {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 40px;
+      background: rgba(13,24,48,0.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(226,177,66,0.4);
+    }
+    .map-wordmark {
+      font-family: 'Bowlby One', sans-serif; font-size: 20px; line-height: 1;
+      background-image: url('/tulsa-flag.png'); background-size: cover; background-position: center;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-decoration: none;
+    }
+    .map-nav {
+      display: flex; align-items: center; gap: 22px;
+      font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.4px;
+    }
+    .map-nav a { color: #f7f2e3; text-decoration: none; }
+    .map-nav a:hover { color: #e2b142; }
+    .map-nav-cta {
+      background: #e2b142; color: #0d1830 !important; padding: 8px 16px; border-radius: 2px;
+    }
+    .lens-panel {
+      position: absolute; top: 72px; left: 20px; z-index: 10;
+      width: 316px;
+      background: rgba(10,20,38,0.94); backdrop-filter: blur(10px);
+      border: 1px solid rgba(247,242,227,0.16);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      font-family: 'Montserrat', sans-serif;
+    }
+    .lens-panel-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 13px 16px; border-bottom: 1px solid rgba(247,242,227,0.12);
+      cursor: pointer; user-select: none;
+    }
+    .lens-panel-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.5px; color: #9dc4b5;
+    }
+    .lens-panel-caret { font-size: 18px; line-height: 1; color: rgba(247,242,227,0.5); }
+    .lens-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; border-bottom: 1px solid rgba(247,242,227,0.07);
+      cursor: pointer;
+    }
+    .lens-row:last-child { border-bottom: none; }
+    .lens-row-left { display: flex; align-items: center; gap: 10px; }
+    .lens-swatch { width: 11px; height: 11px; flex-shrink: 0; }
+    .lens-label { font-size: 12px; font-weight: 600; color: #f7f2e3; }
+    .lens-count { font-family: 'Bowlby One', sans-serif; font-size: 18px; color: #e2b142; }
+    .toggle-pill {
+      position: relative; width: 38px; height: 21px; border-radius: 11px;
+      border: none; cursor: pointer; padding: 0; flex-shrink: 0;
+      transition: background 200ms ease;
+    }
+    .toggle-knob {
+      position: absolute; top: 2px; left: 0; width: 17px; height: 17px;
+      border-radius: 50%; background: #f7f2e3;
+      transition: transform 200ms ease;
+    }
+    .lens-redesigns { opacity: 0.5; }
+    .lens-redesigns .lens-label::after {
+      content: " — coming soon";
+      font-size: 10px; font-weight: 400; color: rgba(247,242,227,0.5);
+    }
+    .map-headline {
+      position: absolute; bottom: 36px; left: 20px; z-index: 10;
+      max-width: 560px; pointer-events: none;
+    }
+    .map-headline h1 {
+      font-family: 'Bowlby One', sans-serif; font-size: 34px; line-height: 1.05;
+      color: #f7f2e3; margin: 0;
+    }
+    .map-headline h1 span { color: #e2b142; }
+  </style>
+<% end %>
+
+<div class="unified-map-wrap" data-controller="unified-map">
+
+  <div id="unified-map-canvas" class="unified-map-canvas" data-unified-map-target="container"></div>
+
+  <header class="map-header">
+    <%= link_to "Tulsa Urbanist", root_path, class: "map-wordmark" %>
+    <nav class="map-nav">
+      <%= link_to "Home", root_path %>
+      <%= link_to "Fatalities", incidents_path %>
+      <%= link_to "Parking", parking_path %>
+      <%= link_to "Redesigns", redesigns_path %>
+      <%= link_to "Add an incident", quick_new_incidents_path, class: "map-nav-cta" %>
+    </nav>
+  </header>
+
+  <div class="lens-panel" data-unified-map-target="panel">
+    <div class="lens-panel-header" data-action="click->unified-map#togglePanel">
+      <span class="lens-panel-title">LENSES</span>
+      <span class="lens-panel-caret" data-panel-caret>–</span>
+    </div>
+    <div data-panel-body>
+      <div class="lens-row"
+           data-action="click->unified-map#toggleLayer"
+           data-lens-id="fatalities"
+           aria-pressed="true">
+        <div class="lens-row-left">
+          <span class="lens-swatch" style="background:#b73032;"></span>
+          <span class="lens-label">Fatalities</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="lens-count"><%= Incident.count rescue "–" %></span>
+          <button class="toggle-pill" data-pill style="background:#e2b142;" tabindex="-1" aria-hidden="true">
+            <span class="toggle-knob" data-knob style="transform:translateX(19px);"></span>
+          </button>
+        </div>
+      </div>
+      <div class="lens-row"
+           data-action="click->unified-map#toggleLayer"
+           data-lens-id="parking"
+           aria-pressed="true">
+        <div class="lens-row-left">
+          <span class="lens-swatch" style="background:#5b677c;"></span>
+          <span class="lens-label">Surface parking</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="lens-count" style="font-size:14px;"><%= ParkingLot.count rescue "–" %> lots</span>
+          <button class="toggle-pill" data-pill style="background:#e2b142;" tabindex="-1" aria-hidden="true">
+            <span class="toggle-knob" data-knob style="transform:translateX(19px);"></span>
+          </button>
+        </div>
+      </div>
+      <div class="lens-row lens-redesigns"
+           data-action="click->unified-map#toggleLayer"
+           data-lens-id="redesigns"
+           aria-pressed="false">
+        <div class="lens-row-left">
+          <span class="lens-swatch" style="background:#e2b142;"></span>
+          <span class="lens-label">Redesigns</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="lens-count"><%= Redesign.count rescue "–" %></span>
+          <button class="toggle-pill" data-pill style="background:rgba(247,242,227,0.15);" tabindex="-1" aria-hidden="true">
+            <span class="toggle-knob" data-knob style="transform:translateX(2px);"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-headline">
+    <h1>The city, mapped by <span>what it costs.</span></h1>
+  </div>
+
+</div>

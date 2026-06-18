@@ -34,5 +34,7 @@ Rails.application.routes.draw do
     end
   end
   
+  get '/map', to: 'map#index'
+
   root "home#index"
 end
