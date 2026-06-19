@@ -19,9 +19,9 @@ const VALUE_RAMP: [number, string][] = [
 ]
 
 const LENSES: LensConfig[] = [
-  { id: "value_per_acre", label: "Value per acre", color: "#e2b142", layers: ["vpa-fill", "vpa-dead-zone-outline"], defaultVisible: true },
+  { id: "value_per_acre", label: "Value per acre", color: "#e2b142", layers: ["vpa-fill"], defaultVisible: true },
   { id: "fatalities", label: "Fatalities", color: "#b73032", layers: ["fatalities-glow", "fatalities-points"], defaultVisible: true },
-  { id: "parking", label: "Surface parking", color: "#5b677c", layers: ["parking-fill", "parking-outline"], defaultVisible: true },
+  { id: "parking", label: "Surface parking", color: "#5b677c", layers: [], defaultVisible: true },
   { id: "redesigns", label: "Redesigns", color: "#e2b142", layers: [], defaultVisible: false },
 ]
 
@@ -95,7 +95,22 @@ export default class extends Controller {
     })
 
     this.updateToggleStyle(btn, this.visibleLayers.has(lensId))
+    this.syncParkingLayers()
     this.persistURLState()
+  }
+
+  private syncParkingLayers() {
+    if (!this.map) return
+    const vpaOn = this.visibleLayers.has("value_per_acre")
+    const parkingOn = this.visibleLayers.has("parking")
+    const outlineVis = (vpaOn && parkingOn) ? "visible" : "none"
+    const fillVis = (!vpaOn && parkingOn) ? "visible" : "none"
+    const setLayer = (id: string, vis: "visible" | "none") => {
+      if (this.map?.getLayer(id)) this.map.setLayoutProperty(id, "visibility", vis)
+    }
+    setLayer("vpa-dead-zone-outline", outlineVis)
+    setLayer("parking-fill", fillVis)
+    setLayer("parking-outline", fillVis)
   }
 
   private initVisibility() {
@@ -185,15 +200,6 @@ export default class extends Controller {
       paint: { "fill-color": stepExpr as any, "fill-opacity": 0.85 },
       layout: { visibility }
     })
-
-    this.map.addLayer({
-      id: "vpa-dead-zone-outline",
-      type: "line",
-      source: "value-per-acre",
-      filter: ["==", ["get", "is_dead_zone"], true],
-      paint: { "line-color": "#b73032", "line-width": 1.5, "line-dasharray": [3, 2] },
-      layout: { visibility }
-    })
   }
 
   private async loadFatalities() {
@@ -258,16 +264,27 @@ export default class extends Controller {
     if (!this.map) return
     const response = await fetch("/api/v1/parking_lots/geojson")
     const geojson = await response.json()
-    const visibility = this.visibleLayers.has("parking") ? "visible" : "none"
+    const vpaOn = this.visibleLayers.has("value_per_acre")
+    const parkingOn = this.visibleLayers.has("parking")
+    const outlineVis = (vpaOn && parkingOn) ? "visible" : "none"
+    const fillVis = (!vpaOn && parkingOn) ? "visible" : "none"
 
     this.map.addSource("parking", { type: "geojson", data: geojson })
+
+    this.map.addLayer({
+      id: "vpa-dead-zone-outline",
+      type: "line",
+      source: "parking",
+      paint: { "line-color": "#b73032", "line-width": 1.5, "line-dasharray": [3, 2] },
+      layout: { visibility: outlineVis }
+    })
 
     this.map.addLayer({
       id: "parking-fill",
       type: "fill",
       source: "parking",
       paint: { "fill-color": "#5b677c", "fill-opacity": 0.75 },
-      layout: { visibility }
+      layout: { visibility: fillVis }
     })
 
     this.map.addLayer({
@@ -275,7 +292,7 @@ export default class extends Controller {
       type: "line",
       source: "parking",
       paint: { "line-color": "#9dc4b5", "line-width": 1, "line-opacity": 0.6 },
-      layout: { visibility }
+      layout: { visibility: fillVis }
     })
   }
 }
