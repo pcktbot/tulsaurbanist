@@ -37,6 +37,10 @@ Rails.application.routes.draw do
   end
   
   get '/map', to: 'map#index'
+  get '/corridors', to: 'corridors#index'
+  get '/corridors/:slug', to: 'corridors#show', as: :corridor
+
+  get '/sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
 
   root "home#index"
 end

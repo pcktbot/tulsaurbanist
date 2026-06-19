@@ -1,32 +1,25 @@
-<% content_for :head do %>
-  <title>Tulsa Urbanist — Mapping the human cost of car-first streets</title>
-  <meta name="description" content="An open map of Tulsa: traffic deaths, surface parking, and the value every acre returns. See how much we leave on the table — and redesigns that ask more of our land.">
-  <meta name="robots" content="index, follow, max-image-preview:large">
-  <link rel="canonical" href="https://tulsaurbanist.org/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Tulsa Urbanist">
-  <meta property="og:title" content="Tulsa Urbanist — Mapping the human cost of car-first streets">
-  <meta property="og:description" content="How much value does each acre return? Traffic deaths, parking, and redesigns on one map of Tulsa.">
-  <meta property="og:url" content="https://tulsaurbanist.org/">
-  <meta property="og:image" content="https://tulsaurbanist.org/og/tulsa-urbanist-map.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Tulsa Urbanist — Mapping the human cost of car-first streets">
-  <meta name="twitter:description" content="How much value does each acre return? Traffic deaths, parking, and redesigns on one map of Tulsa.">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Tulsa Urbanist",
-    "url": "https://tulsaurbanist.org/",
-    "description": "An open map of Tulsa's traffic fatalities, surface parking, and citizen street redesigns.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://tulsaurbanist.org/search?q={query}",
-      "query-input": "required name=query"
-    },
-    "about": { "@type": "Place", "name": "Tulsa, Oklahoma", "geo": { "@type": "GeoCoordinates", "latitude": 36.154, "longitude": -95.993 } }
-  }
-  </script>
+<% content_for :title, "Tulsa Urbanist — Mapping the human cost of car-first streets" %>
+<% content_for :description, "An open map of Tulsa: traffic deaths, surface parking, and the value every acre returns. See how much we leave on the table — and redesigns that ask more of our land." %>
+<% content_for :og_description, "How much value does each acre return? Traffic deaths, parking, and redesigns on one map of Tulsa." %>
+<% content_for :canonical, "https://tulsaurbanist.org/" %>
+<% content_for :og_image, "https://tulsaurbanist.org/og/tulsa-urbanist-map.png" %>
+
+<% content_for :json_ld do %>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Tulsa Urbanist",
+  "url": "https://tulsaurbanist.org/",
+  "description": "An open map of Tulsa's traffic fatalities, surface parking, and citizen street redesigns.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://tulsaurbanist.org/search?q={query}",
+    "query-input": "required name=query"
+  },
+  "about": { "@type": "Place", "name": "Tulsa, Oklahoma", "geo": { "@type": "GeoCoordinates", "latitude": 36.154, "longitude": -95.993 } }
+}
+</script>
 <% end %>
 
 <div style="font-family:'Merriweather Sans',sans-serif; color:#f7f2e3; background:#0d1830;">

@@ -1,0 +1,110 @@
+<% content_for :title, "#{@corridor[:name]} — #{@corridor[:fatalities]} traffic deaths since 2021 | Tulsa Urbanist" %>
+<% content_for :description, "#{@corridor[:name]} in Tulsa: #{@corridor[:description]} Read the crash record and what a safer street could look like." %>
+<% content_for :og_type, "article" %>
+<% content_for :canonical, "https://tulsaurbanist.org/corridors/#{@corridor[:slug]}" %>
+<% content_for :og_image, "https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/#{@corridor[:center_lng]},#{@corridor[:center_lat]},#{@corridor[:zoom]},0/1200x630?access_token=#{ENV['MAPBOX_ACCESS_TOKEN']}" %>
+
+<% content_for :json_ld do %>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["Place", "Article"],
+  "name": "<%= @corridor[:name] %>",
+  "description": "<%= @corridor[:description] %>",
+  "url": "https://tulsaurbanist.org/corridors/<%= @corridor[:slug] %>",
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": <%= @corridor[:center_lat] %>,
+    "longitude": <%= @corridor[:center_lng] %>
+  },
+  "containedInPlace": {
+    "@type": "City",
+    "name": "Tulsa",
+    "addressRegion": "OK"
+  },
+  "headline": "<%= @corridor[:name] %> — <%= @corridor[:fatalities] %> traffic deaths since 2021",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tulsa Urbanist",
+    "url": "https://tulsaurbanist.org"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tulsaurbanist.org/" },
+    { "@type": "ListItem", "position": 2, "name": "Corridors", "item": "https://tulsaurbanist.org/corridors" },
+    { "@type": "ListItem", "position": 3, "name": "<%= @corridor[:name] %>", "item": "https://tulsaurbanist.org/corridors/<%= @corridor[:slug] %>" }
+  ]
+}
+</script>
+<% end %>
+
+<%= render 'shared/header' do %>
+  <%= link_to 'All corridors', '/corridors', class: 'link' %>
+  <%= link_to 'The map', '/map', class: 'link' %>
+<% end %>
+
+<div class="cor-page">
+  <nav class="cor-breadcrumb" aria-label="Breadcrumb">
+    <%= link_to 'Home', root_path %>
+    <span>›</span>
+    <%= link_to 'Corridors', '/corridors' %>
+    <span>›</span>
+    <%= @corridor[:name] %>
+  </nav>
+
+  <div class="cor-show-hero">
+    <p class="cor-eyebrow">Traffic corridor &mdash; <%= @corridor[:area] %></p>
+    <h1 class="cor-page-title"><%= @corridor[:name] %></h1>
+
+    <div class="cor-show-meta">
+      <div class="cor-show-meta-item">
+        <span class="cor-show-meta-label">Deaths since 2021</span>
+        <span class="cor-show-meta-value danger"><%= @corridor[:fatalities] %></span>
+      </div>
+      <div class="cor-show-meta-item">
+        <span class="cor-show-meta-label">Length</span>
+        <span class="cor-show-meta-value"><%= @corridor[:length_miles] %> mi</span>
+      </div>
+      <div class="cor-show-meta-item">
+        <span class="cor-show-meta-label">Speed limit</span>
+        <span class="cor-show-meta-value"><%= @corridor[:speed_limit] %> mph</span>
+      </div>
+      <div class="cor-show-meta-item">
+        <span class="cor-show-meta-label">Lanes</span>
+        <span class="cor-show-meta-value"><%= @corridor[:lanes] %></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cor-show-body">
+    <div>
+      <p class="cor-show-text"><%= @corridor[:detail] %></p>
+
+      <div class="cor-show-cta">
+        <%= link_to "See fatalities on the map", "/map", class: "cor-btn-primary" %>
+        <%= link_to "All corridors", "/corridors", class: "cor-btn-outline" %>
+      </div>
+    </div>
+
+    <aside class="cor-show-aside">
+      <p class="cor-show-aside-title">Street profile</p>
+      <dl>
+        <dt>Location</dt>
+        <dd><%= @corridor[:area] %></dd>
+        <dt>Length</dt>
+        <dd><%= @corridor[:length_miles] %> miles</dd>
+        <dt>Lanes</dt>
+        <dd><%= @corridor[:lanes] %></dd>
+        <dt>Speed limit</dt>
+        <dd><%= @corridor[:speed_limit] %> mph</dd>
+        <dt>Deaths since 2021</dt>
+        <dd><%= @corridor[:fatalities] %></dd>
+      </dl>
+    </aside>
+  </div>
+</div>
