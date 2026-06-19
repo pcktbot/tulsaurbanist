@@ -1,34 +1,29 @@
 <%= render 'shared/header' do %>
+  <%= link_to 'All incidents', incidents_path, class: 'link' %>
   <% if user_authenticated? %>
     <%= link_to 'Edit', edit_incident_path(@incident), class: 'link' %>
-  <% end %>
-  <%= link_to 'Back to Incidents', incidents_path, class: 'link' %>
-  <% if user_authenticated? %>
-    <%= link_to 'Delete', incident_path(@incident), method: :delete, data: { confirm: 'Are you sure you want to delete this incident?' }, class: 'link' %>
+    <%= link_to 'Delete', incident_path(@incident), method: :delete, data: { confirm: 'Are you sure?' }, class: 'link' %>
   <% end %>
 <% end %>
-<div class="incident-details">
-  <h1>Incident Details</h1>
 
-  <div class="notice"><%= notice %></div>
+<div class="inc-show">
+  <div class="inc-show-header">
+    <div class="inc-show-date"><%= @incident.date_time.strftime("%B %d, %Y · %I:%M %p").upcase %></div>
+    <div class="inc-show-location"><%= @incident.location_description %></div>
+    <div class="inc-show-fatalities">
+      <span class="inc-show-fatality-num"><%= @incident.fatality_count %></span>
+      <span class="inc-show-fatality-label"><%= @incident.fatality_count == 1 ? 'fatality' : 'fatalities' %></span>
+    </div>
+  </div>
 
-  <dl>
-    <dt>Date and Time:</dt>
-    <dd><%= @incident.date_time.strftime("%B %d, %Y at %I:%M %p") %></dd>
-
-    <dt>Location:</dt>
-    <dd><%= @incident.location_description %></dd>
-
+  <dl class="inc-show-dl">
     <% if @incident.brief_description.present? %>
-      <dt>Description:</dt>
+      <dt>Description</dt>
       <dd><%= @incident.brief_description %></dd>
     <% end %>
 
-    <dt>Total Fatalities:</dt>
-    <dd><%= @incident.fatality_count %></dd>
-
     <% if @incident.total_fatalities_by_type.any? { |_, count| count > 0 } %>
-      <dt>Fatalities by Type:</dt>
+      <dt>By type</dt>
       <dd>
         <ul>
           <% @incident.total_fatalities_by_type.each do |type, count| %>
@@ -40,20 +35,18 @@
       </dd>
     <% end %>
 
-    <dt>Information Source:</dt>
+    <dt>Source</dt>
     <dd><%= @incident.information_source %></dd>
 
-    <dt>Source:</dt>
-    <dd><%= @incident.source&.name || 'None' %></dd>
+    <dt>Reference</dt>
+    <dd><%= @incident.source&.name || '—' %></dd>
 
-    <dt>Verification Status:</dt>
-<dd><%= @incident.verification_status_display %></dd>
+    <dt>Verification</dt>
+    <dd><%= @incident.verification_status_display %></dd>
 
     <% if @incident.has_geo_coordinates? %>
-      <dt>Coordinates:</dt>
-      <dd>Latitude: <%= @incident.latitude %>, Longitude: <%= @incident.longitude %></dd>
+      <dt>Coordinates</dt>
+      <dd><%= @incident.latitude %>, <%= @incident.longitude %></dd>
     <% end %>
   </dl>
-
-  
 </div>

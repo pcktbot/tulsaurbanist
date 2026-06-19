@@ -1,0 +1,51 @@
+<% content_for :title, "Tulsa's Deadliest Corridors — Traffic Fatalities by Street | Tulsa Urbanist" %>
+<% content_for :description, "Every documented traffic fatality in Tulsa mapped by corridor. Admiral Blvd, 11th Street, Peoria Ave, and more — the streets that keep killing people." %>
+<% content_for :og_type, "website" %>
+<% content_for :canonical, "https://tulsaurbanist.org/corridors" %>
+
+<% content_for :json_ld do %>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Tulsa's Deadliest Traffic Corridors",
+  "description": "Traffic fatality counts by corridor in Tulsa, Oklahoma.",
+  "url": "https://tulsaurbanist.org/corridors",
+  "numberOfItems": <%= CorridorsController::CORRIDORS.length %>,
+  "itemListElement": [
+    <% CorridorsController::CORRIDORS.each_with_index do |c, i| %>
+    {
+      "@type": "ListItem",
+      "position": <%= i + 1 %>,
+      "url": "https://tulsaurbanist.org/corridors/<%= c[:slug] %>",
+      "name": "<%= c[:name] %>"
+    }<%= i < CorridorsController::CORRIDORS.length - 1 ? "," : "" %>
+    <% end %>
+  ]
+}
+</script>
+<% end %>
+
+<%= render 'shared/header' do %>
+  <%= link_to 'The map', '/map', class: 'link' %>
+  <%= link_to 'Incidents', incidents_path, class: 'link' %>
+<% end %>
+
+<div class="cor-page">
+  <div class="cor-page-header">
+    <p class="cor-eyebrow">Traffic fatalities</p>
+    <h1 class="cor-page-title">Tulsa's deadliest corridors.</h1>
+    <p class="cor-page-subtitle">Each corridor has its own page — its crash record, its street geometry, and the redesign it deserves. These are the roads built to surface when someone searches their street.</p>
+  </div>
+
+  <div class="cor-grid">
+    <% CorridorsController::CORRIDORS.each do |corridor| %>
+      <%= link_to corridor_path(corridor[:slug]), class: 'cor-card' do %>
+        <div class="cor-card-fatalities"><%= corridor[:fatalities] %> deaths</div>
+        <div class="cor-card-name"><%= corridor[:name] %></div>
+        <p class="cor-card-desc"><%= corridor[:description] %></p>
+        <span class="cor-card-slug">/corridors/<%= corridor[:slug] %></span>
+      <% end %>
+    <% end %>
+  </div>
+</div>

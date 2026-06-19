@@ -1,46 +1,53 @@
-<div class="">
 <%= render 'shared/header' do %>
   <%= link_to 'Map', map_incidents_path, class: 'link' %>
   <% if user_authenticated? %>
-    <%= link_to 'Create', new_incident_path, class: 'link' %>
+    <%= link_to 'Add incident', new_incident_path, class: 'link' %>
   <% end %>
 <% end %>
 
-<div class="notice hidden"><%= notice %></div>
-
-
-<div class="incidents-container">
-  <div class="flex incidents-header">
-    <div class="incident-col date-col">Date</div>
-    <div class="incident-col location-col">Location</div>
-    <div class="incident-col description-col">Description</div>
-    <div class="incident-col fatalities-col">Fatalities</div>
-    <div class="incident-col actions-col">Actions</div>
+<div class="inc-page">
+  <div class="inc-page-header">
+    <h1 class="inc-page-title">Traffic <span>Fatalities</span></h1>
+    <span class="inc-count"><%= @incidents.count %> INCIDENTS</span>
   </div>
-  <div class="incidents-list">
-    <% @incidents.each do |incident| %>
-      <div class="flex incident-row">
-        <div class="incident-col date-col"><%= incident.date_time.strftime("%B %d, %Y") %></div>
-        <div class="incident-col location-col"><%= incident.location_description %></div>
-        <div class="incident-col description-col"><%= incident.brief_description %></div>
-        <div class="incident-col fatalities-col"><%= incident.fatality_count %></div>
-        <div class="incident-col actions-col">
-          <div class="action-group flex flex-column">
-            <div class="action-item">
-              <%= link_to 'Show', incident, class: 'action' %>
+
+  <table class="inc-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Location</th>
+        <th>Description</th>
+        <th>Fatalities</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @incidents.each do |incident| %>
+        <tr>
+          <td class="inc-date"><%= incident.date_time.strftime("%b %d, %Y") %></td>
+          <td><%= incident.location_description %></td>
+          <td><%= incident.brief_description %></td>
+          <td><span class="inc-fatality-count"><%= incident.fatality_count %></span></td>
+          <td>
+            <% status_class = case incident.verification_status
+               when 'status_verified' then 'verified'
+               when 'status_partially_verified' then 'partial'
+               else 'unverified'
+               end %>
+            <span class="inc-status <%= status_class %>"><%= incident.verification_status_display %></span>
+          </td>
+          <td>
+            <div class="inc-actions">
+              <%= link_to 'View', incident, class: 'inc-action-link' %>
+              <% if user_authenticated? %>
+                <%= link_to 'Edit', edit_incident_path(incident), class: 'inc-action-link' %>
+                <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'inc-action-link destructive' %>
+              <% end %>
             </div>
-            <% if user_authenticated? %>
-              <div class="action-item">
-                <%= link_to 'Edit', edit_incident_path(incident), class: 'action' %>
-              </div>
-              <div class="action-item">
-                <%= link_to 'Delete', incident, method: :delete, data: { confirm: 'Are you sure?' }, class: 'action destructive' %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

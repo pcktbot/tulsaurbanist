@@ -1,8 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TulsaUrbanist</title>
+    <meta charset="utf-8">
+    <title><%= content_for?(:title) ? yield(:title) : "Tulsa Urbanist — Mapping the human cost of car-first streets" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "An open map of Tulsa: traffic deaths, surface parking, and the value every acre returns. See how much we leave on the table — and redesigns that ask more of our land." %>">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="<%= content_for?(:canonical) ? yield(:canonical) : request.url %>">
+    <meta property="og:type" content="<%= content_for?(:og_type) ? yield(:og_type) : "website" %>">
+    <meta property="og:site_name" content="Tulsa Urbanist">
+    <meta property="og:title" content="<%= content_for?(:og_title) ? yield(:og_title) : (content_for?(:title) ? yield(:title) : "Tulsa Urbanist — Mapping the human cost of car-first streets") %>">
+    <meta property="og:description" content="<%= content_for?(:og_description) ? yield(:og_description) : (content_for?(:description) ? yield(:description) : "How much value does each acre return? Traffic deaths, parking, and redesigns on one map of Tulsa.") %>">
+    <meta property="og:url" content="<%= content_for?(:canonical) ? yield(:canonical) : request.url %>">
+    <meta property="og:image" content="<%= content_for?(:og_image) ? yield(:og_image) : "https://tulsaurbanist.org/og/tulsa-urbanist-map.png" %>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= content_for?(:og_title) ? yield(:og_title) : (content_for?(:title) ? yield(:title) : "Tulsa Urbanist — Mapping the human cost of car-first streets") %>">
+    <meta name="twitter:description" content="<%= content_for?(:og_description) ? yield(:og_description) : (content_for?(:description) ? yield(:description) : "How much value does each acre return? Traffic deaths, parking, and redesigns on one map of Tulsa.") %>">
+    <%= yield :json_ld %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= render 'layouts/fonts' %>

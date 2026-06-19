@@ -1,5 +1,10 @@
-<div class="redesign-form">
-  <h1>Edit Redesign</h1>
+<%= render 'shared/header' do %>
+  <%= link_to 'All redesigns', redesigns_path, class: 'link' %>
+  <%= link_to 'Open editor', @redesign, class: 'link' %>
+<% end %>
+
+<div class="rds-form">
+  <h1 class="rds-form-title">Edit Redesign</h1>
 
   <%= form_with(model: @redesign, local: true) do |f| %>
     <% if @redesign.errors.any? %>
@@ -34,12 +39,12 @@
     </div>
 
     <div class="field">
-      <%= f.label :max_radius, "Max Radius (meters)" %>
+      <%= f.label :max_radius, "Max radius (m)" %>
       <%= f.number_field :max_radius, step: :any, required: true %>
     </div>
 
     <div class="actions">
-      <%= f.submit "Update Redesign", class: "btn btn-primary" %>
+      <%= f.submit "Save changes" %>
       <%= link_to "Cancel", @redesign, class: "btn" %>
     </div>
   <% end %>
