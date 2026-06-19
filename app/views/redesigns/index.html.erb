@@ -1,27 +1,37 @@
-<div class="redesigns-index">
-  <h1>My Redesigns</h1>
+<%= render 'shared/header' do %>
+  <% if user_authenticated? %>
+    <%= link_to 'New redesign', new_redesign_path, class: 'link' %>
+  <% end %>
+<% end %>
 
-  <%= link_to "New Redesign", new_redesign_path, class: "btn btn-primary" %>
+<div class="rds-page">
+  <div class="rds-page-header">
+    <h1 class="rds-page-title">Citizen <span>Redesigns</span></h1>
+    <% if user_authenticated? %>
+      <%= link_to 'New redesign', new_redesign_path, class: 'rds-new-link' %>
+    <% end %>
+  </div>
 
-  <div class="redesigns-list">
-    <% if @redesigns.any? %>
+  <% if @redesigns.any? %>
+    <div class="rds-grid">
       <% @redesigns.each do |redesign| %>
-        <div class="redesign-card">
-          <h3><%= link_to redesign.name, redesign %></h3>
+        <div class="rds-card">
+          <div class="rds-card-name"><%= link_to redesign.name, redesign %></div>
           <% if redesign.description.present? %>
-            <p><%= redesign.description %></p>
+            <p class="rds-card-desc"><%= redesign.description %></p>
           <% end %>
-          <p class="redesign-meta">
-            Updated <%= time_ago_in_words(redesign.updated_at) %> ago
-          </p>
-          <div class="redesign-actions">
-            <%= link_to "Edit", redesign, class: "btn btn-sm" %>
-            <%= button_to "Delete", redesign, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          <div class="rds-card-meta">Updated <%= time_ago_in_words(redesign.updated_at) %> ago</div>
+          <div class="rds-card-actions">
+            <%= link_to 'Open', redesign, class: 'rds-action-link' %>
+            <% if user_authenticated? %>
+              <%= link_to 'Edit', edit_redesign_path(redesign), class: 'rds-action-link' %>
+              <%= button_to 'Delete', redesign, method: :delete, data: { confirm: 'Are you sure?' }, class: 'rds-action-link destructive' %>
+            <% end %>
           </div>
         </div>
       <% end %>
-    <% else %>
-      <p>You haven't created any redesigns yet.</p>
-    <% end %>
-  </div>
+    </div>
+  <% else %>
+    <p class="rds-empty">No redesigns yet.</p>
+  <% end %>
 </div>

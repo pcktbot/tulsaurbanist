@@ -4,8 +4,12 @@
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.js"></script>
 <% end %>
 
-<div class="redesign-form" data-controller="location-picker">
-  <h1>New Redesign</h1>
+<%= render 'shared/header' do %>
+  <%= link_to 'All redesigns', redesigns_path, class: 'link' %>
+<% end %>
+
+<div class="rds-form" data-controller="location-picker">
+  <h1 class="rds-form-title">New Redesign</h1>
 
   <%= form_with(model: @redesign, local: true) do |f| %>
     <% if @redesign.errors.any? %>
@@ -32,9 +36,7 @@
     <div class="location-picker-section">
       <h3>Select Location</h3>
       <p class="help-text">Drag the red marker to set the center of your redesign area</p>
-
       <div class="location-picker-map" data-location-picker-target="map"></div>
-
       <div class="location-inputs">
         <div class="field">
           <%= f.label :center_latitude %>
@@ -42,16 +44,14 @@
                              data: { location_picker_target: "latInput" },
                              value: 36.1539 %>
         </div>
-
         <div class="field">
           <%= f.label :center_longitude %>
           <%= f.number_field :center_longitude, step: :any, required: true,
                              data: { location_picker_target: "lngInput" },
                              value: -95.9928 %>
         </div>
-
         <div class="field">
-          <%= f.label :max_radius, "Max Radius (meters)" %>
+          <%= f.label :max_radius, "Max radius (m)" %>
           <%= f.number_field :max_radius, step: :any, required: true,
                              data: { location_picker_target: "radiusInput" },
                              value: 500 %>
@@ -60,7 +60,7 @@
     </div>
 
     <div class="actions">
-      <%= f.submit "Create Redesign", class: "btn btn-primary" %>
+      <%= f.submit "Create redesign" %>
       <%= link_to "Cancel", redesigns_path, class: "btn" %>
     </div>
   <% end %>
