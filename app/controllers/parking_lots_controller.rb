@@ -1,8 +1,5 @@
 class ParkingLotsController < ApplicationController
-  before_action :authenticate_user!, only: [:edit]
-
-  def index
-  end
+  before_action :authenticate_user!
 
   def edit
   end

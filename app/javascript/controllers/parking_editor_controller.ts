@@ -103,10 +103,10 @@ export default class extends Controller {
   private handleSelectionChange(e: { features: GeoJSON.Feature[] }) {
     if (e.features.length > 0) {
       this.selectedFeatureId = e.features[0].id as string
-      this.deleteButtonTarget.disabled = false
+      this.setDeleteEnabled(true)
     } else {
       this.selectedFeatureId = null
-      this.deleteButtonTarget.disabled = true
+      this.setDeleteEnabled(false)
     }
   }
 
@@ -125,7 +125,17 @@ export default class extends Controller {
 
     this.draw.delete(this.selectedFeatureId)
     this.selectedFeatureId = null
-    this.deleteButtonTarget.disabled = true
+    this.setDeleteEnabled(false)
+  }
+
+  private setDeleteEnabled(enabled: boolean) {
+    const btn = this.deleteButtonTarget
+    btn.disabled = !enabled
+    if (enabled) {
+      btn.style.cssText = "background:rgba(183,48,50,0.15); border:1px solid #b73032; padding:9px 16px; font-family:'Montserrat',sans-serif; font-size:12px; font-weight:600; color:#f7f2e3; cursor:pointer; text-align:left; letter-spacing:0.5px; transition:all 0.15s;"
+    } else {
+      btn.style.cssText = "background:transparent; border:1px solid rgba(247,242,227,0.3); padding:9px 16px; font-family:'Montserrat',sans-serif; font-size:12px; font-weight:600; color:rgba(247,242,227,0.5); cursor:not-allowed; text-align:left; letter-spacing:0.5px; transition:all 0.15s;"
+    }
   }
 
   private csrfToken(): string {
