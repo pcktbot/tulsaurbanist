@@ -38,7 +38,7 @@ export default class extends Controller {
 
     this.map = new mapboxgl.Map({
       container: this.mapTarget,
-      style: 'mapbox://styles/pcktbot/cml86l1lt001v01ss9c7r8i6e',
+      style: 'mapbox://styles/mapbox/dark-v11',
       center: [initialLng, initialLat],
       zoom: 15
     })

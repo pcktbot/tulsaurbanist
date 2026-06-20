@@ -66,7 +66,7 @@ export default class extends Controller {
 
     this.map = new mapboxgl.Map({
       container: this.containerTarget,
-      style: 'mapbox://styles/pcktbot/ck77pm7sb09if1inzw8p9uxft',
+      style: 'mapbox://styles/mapbox/empty-v9',
       center: [this.centerLngValue, this.centerLatValue],
       zoom: 15,
       pitch: 0,
@@ -76,6 +76,7 @@ export default class extends Controller {
     this.map.addControl(new mapboxgl.NavigationControl())
 
     this.map.on('load', () => {
+      this.addRoadLayers()
       this.drawBoundaryCircle()
       this.loadShapes()
       this.setupShapeInteraction()
@@ -551,6 +552,47 @@ export default class extends Controller {
       this.map.easeTo({ pitch: 0, duration: 1000 })
       this.viewButtonTarget.textContent = '3D View'
     }
+  }
+
+  private addRoadLayers() {
+    if (!this.map) return
+
+    this.map.addLayer({
+      id: 'background',
+      type: 'background',
+      paint: { 'background-color': '#0d1830' }
+    })
+
+    this.map.addSource('mapbox-streets', {
+      type: 'vector',
+      url: 'mapbox://mapbox.mapbox-streets-v8'
+    })
+
+    this.map.addLayer({
+      id: 'roads-major',
+      type: 'line',
+      source: 'mapbox-streets',
+      'source-layer': 'road',
+      filter: ['in', ['get', 'class'], ['literal', ['motorway', 'trunk', 'primary', 'secondary']]],
+      paint: {
+        'line-color': 'rgba(247,242,227,0.28)',
+        'line-width': ['interpolate', ['linear'], ['zoom'], 12, 1.5, 16, 5]
+      },
+      layout: { 'line-join': 'round', 'line-cap': 'round' }
+    })
+
+    this.map.addLayer({
+      id: 'roads-local',
+      type: 'line',
+      source: 'mapbox-streets',
+      'source-layer': 'road',
+      filter: ['in', ['get', 'class'], ['literal', ['tertiary', 'residential', 'street', 'street_limited', 'service']]],
+      paint: {
+        'line-color': 'rgba(247,242,227,0.12)',
+        'line-width': ['interpolate', ['linear'], ['zoom'], 13, 0.5, 16, 2.5]
+      },
+      layout: { 'line-join': 'round', 'line-cap': 'round' }
+    })
   }
 
   drawBoundaryCircle() {
