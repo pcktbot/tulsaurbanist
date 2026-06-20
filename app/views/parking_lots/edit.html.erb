@@ -1,23 +1,30 @@
+<% content_for :title, "Parking Editor — Tulsa Urbanist" %>
+
 <% content_for :head do %>
   <meta name="mapbox-token" content="<%= ENV['MAPBOX_ACCESS_TOKEN'] %>">
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.11.0/mapbox-gl.css" rel="stylesheet">
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.3/mapbox-gl-draw.css" type="text/css">
 <% end %>
 
-<div class="parking-editor"
-     data-controller="parking-editor">
+<div data-controller="parking-editor" style="font-family:'Merriweather Sans',sans-serif;">
   <div id="parking-editor-map"
        data-parking-editor-target="container"
-       style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;"></div>
+       style="position:fixed; top:0; left:0; width:100%; height:100%;"></div>
 
-  <div style="position: fixed; top: 1rem; left: 1rem; z-index: 1; display: flex; flex-direction: column; gap: 0.5rem;">
-    <p style="margin: 0; background: white; padding: 0.5rem 0.75rem; border-radius: 4px; font-size: 0.875rem;">
-      Click the polygon tool to draw a parking lot. Click each corner, then double-click to close.
-    </p>
+  <div style="position:fixed; top:1rem; left:1rem; z-index:1; display:flex; flex-direction:column; gap:0.5rem; width:260px;">
+    <div style="background:rgba(13,24,48,0.92); backdrop-filter:blur(10px); border:1px solid rgba(247,242,227,0.16); padding:13px 16px; border-bottom:none;">
+      <div style="font-family:'Bowlby One',sans-serif; font-size:16px; color:#f7f2e3; line-height:1;">Parking Editor</div>
+      <div style="font-family:'Montserrat',sans-serif; font-size:11px; font-weight:600; letter-spacing:1.5px; color:#9dc4b5; margin-top:6px; text-transform:uppercase;">Tulsa Surface Lots</div>
+    </div>
+    <div style="background:rgba(13,24,48,0.92); backdrop-filter:blur(10px); border:1px solid rgba(247,242,227,0.16); padding:12px 16px;">
+      <p style="margin:0; font-family:'Montserrat',sans-serif; font-size:12px; line-height:1.5; color:rgba(247,242,227,0.7);">Click the polygon tool to draw a lot. Click each corner, then double-click to close.</p>
+    </div>
     <button data-action="parking-editor#deleteSelected"
             data-parking-editor-target="deleteButton"
             disabled
-            style="background: white; border: 1px solid #ccc; padding: 0.4rem 0.75rem; border-radius: 4px; cursor: pointer; font-size: 0.875rem; text-align: left;">
+            style="background:transparent; border:1px solid rgba(247,242,227,0.3); padding:9px 16px; font-family:'Montserrat',sans-serif; font-size:12px; font-weight:600; color:rgba(247,242,227,0.5); cursor:not-allowed; text-align:left; letter-spacing:0.5px; transition:all 0.15s;"
+            data-enabled-style="background:rgba(183,48,50,0.15); border-color:#b73032; color:#f7f2e3; cursor:pointer;"
+            data-disabled-style="background:transparent; border:1px solid rgba(247,242,227,0.3); color:rgba(247,242,227,0.5); cursor:not-allowed;">
       Delete selected
     </button>
   </div>

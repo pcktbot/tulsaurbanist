@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   get 'dashboard', to: 'dashboard#index'
-  get 'parking', to: 'parking_lots#index'
-  get 'parking/edit', to: 'parking_lots#edit'
+  get 'parking', to: 'parking_lots#edit'
 
   resources :redesigns
 
