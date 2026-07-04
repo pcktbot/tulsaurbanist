@@ -24,7 +24,6 @@ Rails.application.routes.draw do
       resources :parking_lots, only: [:create, :update, :destroy]
 
       resources :shape_templates, only: [:index]
-      get 'parcels/value_per_acre', to: 'parcels#value_per_acre'
 
       resources :redesigns, only: [:index, :show, :create, :update, :destroy] do
         member do
@@ -36,8 +35,6 @@ Rails.application.routes.draw do
   end
   
   get '/map', to: 'map#index'
-  get '/corridors', to: 'corridors#index'
-  get '/corridors/:slug', to: 'corridors#show', as: :corridor
 
   get '/sitemap.xml', to: 'sitemap#index', defaults: { format: 'xml' }
 

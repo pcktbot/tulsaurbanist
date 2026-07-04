@@ -9,17 +9,7 @@ interface LensConfig {
   defaultVisible: boolean
 }
 
-const VALUE_RAMP: [number, string][] = [
-  [0,      "#16223a"],
-  [50000,  "#2f4258"],
-  [100000, "#5b677c"],
-  [200000, "#9dc4b5"],
-  [400000, "#e2b142"],
-  [630000, "#f4d27a"],
-]
-
 const LENSES: LensConfig[] = [
-  { id: "value_per_acre", label: "Value per acre", color: "#e2b142", layers: ["vpa-fill"], defaultVisible: true },
   { id: "fatalities", label: "Fatalities", color: "#b73032", layers: ["fatalities-glow", "fatalities-points"], defaultVisible: true },
   { id: "parking", label: "Surface parking", color: "#5b677c", layers: [], defaultVisible: true },
   { id: "redesigns", label: "Redesigns", color: "#e2b142", layers: [], defaultVisible: false },
@@ -54,7 +44,6 @@ export default class extends Controller {
 
     this.map.on("load", () => {
       this.addBaseMap()
-      this.loadValuePerAcre()
       this.loadFatalities()
       this.loadParkingLots()
     })
@@ -101,16 +90,13 @@ export default class extends Controller {
 
   private syncParkingLayers() {
     if (!this.map) return
-    const vpaOn = this.visibleLayers.has("value_per_acre")
     const parkingOn = this.visibleLayers.has("parking")
-    const outlineVis = (vpaOn && parkingOn) ? "visible" : "none"
-    const fillVis = (!vpaOn && parkingOn) ? "visible" : "none"
+    const visibility = parkingOn ? "visible" : "none"
     const setLayer = (id: string, vis: "visible" | "none") => {
       if (this.map?.getLayer(id)) this.map.setLayoutProperty(id, "visibility", vis)
     }
-    setLayer("vpa-dead-zone-outline", outlineVis)
-    setLayer("parking-fill", fillVis)
-    setLayer("parking-outline", fillVis)
+    setLayer("parking-fill", visibility)
+    setLayer("parking-outline", visibility)
   }
 
   private initVisibility() {
@@ -180,28 +166,6 @@ export default class extends Controller {
     window.history.replaceState({}, "", url.toString())
   }
 
-  private async loadValuePerAcre() {
-    if (!this.map) return
-    const response = await fetch("/api/v1/parcels/value_per_acre.geojson")
-    const geojson = await response.json()
-    const visibility = this.visibleLayers.has("value_per_acre") ? "visible" : "none"
-
-    this.map.addSource("value-per-acre", { type: "geojson", data: geojson })
-
-    const stepExpr: any[] = ["step", ["get", "value_per_acre"]]
-    VALUE_RAMP.forEach(([threshold, color], i) => {
-      if (i === 0) { stepExpr.push(color) } else { stepExpr.push(threshold, color) }
-    })
-
-    this.map.addLayer({
-      id: "vpa-fill",
-      type: "fill",
-      source: "value-per-acre",
-      paint: { "fill-color": stepExpr as any, "fill-opacity": 0.85 },
-      layout: { visibility }
-    })
-  }
-
   private async loadFatalities() {
     if (!this.map) return
     const response = await fetch("/api/v1/incidents/geojson")
@@ -264,27 +228,16 @@ export default class extends Controller {
     if (!this.map) return
     const response = await fetch("/api/v1/parking_lots/geojson")
     const geojson = await response.json()
-    const vpaOn = this.visibleLayers.has("value_per_acre")
-    const parkingOn = this.visibleLayers.has("parking")
-    const outlineVis = (vpaOn && parkingOn) ? "visible" : "none"
-    const fillVis = (!vpaOn && parkingOn) ? "visible" : "none"
+    const visibility = this.visibleLayers.has("parking") ? "visible" : "none"
 
     this.map.addSource("parking", { type: "geojson", data: geojson })
-
-    this.map.addLayer({
-      id: "vpa-dead-zone-outline",
-      type: "line",
-      source: "parking",
-      paint: { "line-color": "#b73032", "line-width": 1.5, "line-dasharray": [3, 2] },
-      layout: { visibility: outlineVis }
-    })
 
     this.map.addLayer({
       id: "parking-fill",
       type: "fill",
       source: "parking",
       paint: { "fill-color": "#5b677c", "fill-opacity": 0.75 },
-      layout: { visibility: fillVis }
+      layout: { visibility }
     })
 
     this.map.addLayer({
@@ -292,7 +245,7 @@ export default class extends Controller {
       type: "line",
       source: "parking",
       paint: { "line-color": "#9dc4b5", "line-width": 1, "line-opacity": 0.6 },
-      layout: { visibility: fillVis }
+      layout: { visibility }
     })
   }
 }
